@@ -75,7 +75,7 @@ footer {
     cursor: pointer;
     text-transform: uppercase;
     box-shadow: 2px 2px 0px #222;
-    height: 20vh;
+    height: 100px;
 }
 
 .menu button:hover {
