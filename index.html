@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Alone Together</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="menu" class="active">
+    <h1>Alone Together</h1>
+    <p>You are a content moderator in a society where isolation is the law.</p>
+    <button class="button" onclick="startGame()">Start Game</button>
+  </div>
+
+  <div id="game">
+    <h2>Level <span id="levelNumber">1</span></h2>
+    <div id="feed" class="feed"></div>
+    <button class="button" onclick="nextLevel()">Next Level</button>
+  </div>
+
+  <script src="game.js"></script>
+</body>
+</html>

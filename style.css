@@ -1,0 +1,36 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #111;
+    color: #f0f0f0;
+  }
+  
+  #menu, #game {
+    display: none;
+    padding: 2rem;
+  }
+  
+  #menu.active, #game.active {
+    display: block;
+  }
+  
+  .button {
+    padding: 1rem 2rem;
+    background-color: #333;
+    color: #f0f0f0;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2rem;
+  }
+  
+  .post {
+    background: #222;
+    margin: 1rem 0;
+    padding: 1rem;
+    border-radius: 5px;
+  }
+  
+  .feed {
+    margin-top: 2rem;
+  }
+  
