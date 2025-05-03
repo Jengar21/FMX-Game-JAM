@@ -1,0 +1,80 @@
+<!--
+<head>
+    <link rel="stylesheet" href="level.css">
+</head>
+-->
+<div class="post-board">
+    <h1 class="myspace-header">Welcome to MySpace Post Board</h1>
+    <div class="post">
+      <img src="user1.jpg" alt="User 1" class="post-image">
+      <div class="post-content">
+        <h3 class="post-author">User 1</h3>
+        <p class="post-text">This is the first post on the board!</p>
+      </div>
+    </div>
+    <div class="post">
+      <img src="user2.jpg" alt="User 2" class="post-image">
+      <div class="post-content">
+        <h3 class="post-author">User 2</h3>
+        <p class="post-text">Loving this new post board feature!</p>
+      </div>
+    </div>
+  </div>
+
+  <style>
+    .post-board {
+      width: 80%;
+      margin: 2rem auto;
+      padding: 1rem;
+      background-color: #fff;
+      border: 2px solid #ccc;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+  
+    .myspace-header {
+      font-size: 2rem;
+      text-align: center;
+      color: #444;
+      margin-bottom: 1rem;
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      text-shadow: 1px 1px 2px #aaa;
+    }
+  
+    .post {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      margin-bottom: 1rem;
+      padding: 1rem;
+      background-color: #f9f9f9;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+    }
+  
+    .post-image {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      border: 2px solid #ccc;
+      object-fit: cover;
+    }
+  
+    .post-content {
+      flex: 1;
+    }
+  
+    .post-author {
+      margin: 0;
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: #0077cc;
+    }
+  
+    .post-text {
+      margin: 0.5rem 0 0;
+      font-size: 1rem;
+      color: #333;
+    }
+  </style>
+  
