@@ -60,8 +60,8 @@ function acceptPost(postId) {
             checkmark.style.opacity = '1';
         }, 10);
 
-        // Remove the corresponding task
-        removeTask(postId);
+        // Highlight and remove the corresponding task
+        highlightAndRemoveTask(postId);
     }
 }
 
@@ -84,17 +84,25 @@ function denyPost(postId) {
             post.remove();
         }, 1000);
 
-        // Remove the corresponding task
-        removeTask(postId);
+        // Highlight and remove the corresponding task
+        highlightAndRemoveTask(postId);
     }
 }
 
-function removeTask(postId) {
+function highlightAndRemoveTask(postId) {
     // Find the task in the orderbook linked to the post
     const task = document.querySelector(`[connected-post="${postId}"]`);
     if (task) {
-        // Remove the task from the DOM
-        task.remove();
+        // Highlight the task in dark grey
+        task.style.transition = 'background-color 0.5s ease';
+        task.style.backgroundColor = 'darkgrey';
+
+        // Remove the task after a short delay
+        setTimeout(() => {
+            task.remove();
+        }, 1000);
+    } else {
+        console.error(`Task with connected-post="${postId}" not found.`);
     }
 }
 
