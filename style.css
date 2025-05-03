@@ -1,4 +1,10 @@
-.container {
+body {
+    font-family: 'Press Start 2P', cursive;
+    background-color: #908d8d;
+    color: #333;
+  } 
+
+.game-container {
     display: grid;
   
     grid-template-areas:
@@ -6,7 +12,7 @@
       "left feed orders"
       "footer footer footer";
   
-    grid-template-columns: 200px 1fr 200px;
+    grid-template-columns: 40% 40% 20%;
     grid-template-rows: auto 1fr auto;
     grid-gap: 10px;
   
@@ -22,7 +28,7 @@
 
 left {
     grid-area: left;
-    background-color: #ddd;
+    /* background-color: #ddd; */
     padding: 10px;
 }
 
@@ -45,7 +51,34 @@ footer {
     text-align: center;
 }
 
-  body {
-    background-color: #908d8d;
-    color: #333;
-  } 
+.menu-header{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+.menu {
+    height: 100vh;
+    align-items: center;
+}
+
+.menu button {
+    font-family: 'Press Start 2P', cursive; /* Apply the pixel art font */
+    font-size: 32px; /* Adjust font size for better readability */
+    padding: 10px 20px;
+    background-color: #444;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-transform: uppercase;
+    box-shadow: 2px 2px 0px #222;
+    height: 20vh;
+}
+
+.menu button:hover {
+    background-color: #555;
+    box-shadow: 1px 1px 0px #111;
+}
