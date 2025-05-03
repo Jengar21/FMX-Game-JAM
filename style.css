@@ -82,3 +82,34 @@ footer {
     background-color: #555;
     box-shadow: 1px 1px 0px #111;
 }
+
+/** levels Styles **/
+
+.accept-button, .deny-button {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 12px;
+    padding: 5px 10px;
+    margin: 5px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-transform: uppercase;
+}
+
+.accept-button {
+    background-color: #4CAF50; /* Green */
+    color: white;
+}
+
+.deny-button {
+    background-color: #f44336; /* Red */
+    color: white;
+}
+
+.accept-button:hover {
+    background-color: #45a049;
+}
+
+.deny-button:hover {
+    background-color: #d32f2f;
+}
