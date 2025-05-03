@@ -13,6 +13,38 @@
     height: 100vh;
   }
 
+  header {
+    grid-area: header;
+    background-color: #ccc;
+    padding: 10px;
+    text-align: center;
+}
+
+left {
+    grid-area: left;
+    background-color: #ddd;
+    padding: 10px;
+}
+
+feed {
+    grid-area: feed;
+    background-color: #fff;
+    padding: 10px;
+}
+
+orders {
+    grid-area: orders;
+    background-color: #ddd;
+    padding: 10px;
+}
+
+footer {
+    grid-area: footer;
+    background-color: #ccc;
+    padding: 10px;
+    text-align: center;
+}
+
   body {
     background-color: #908d8d;
     color: #333;
