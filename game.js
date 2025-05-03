@@ -23,6 +23,16 @@ function startGame() {
             document.getElementById('post-board-container').innerHTML = html;
         })
         .catch(error => console.error('Error loading level1:', error));
+
+    // Load level1.html into the feed container
+    fetch('orderbook/orderbook1.html')
+        .then(response => response.text())
+        .then(html => {
+            document.getElementById('orders-container').innerHTML = html;
+        })
+        .catch(error => console.error('Error loading level1:', error));
+
+
 }
 
 
