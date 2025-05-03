@@ -4,3 +4,4 @@ fetch('levels/level1.html')
       document.getElementById('post-board-container').innerHTML = html;
     })
     .catch(error => console.error('Error loading post board:', error));
+
