@@ -9,6 +9,7 @@ function showMenu() {
 }
 
 function startGame() {
+    screenTransition("Loading Level 1...");
     const gameContainer = document.querySelector('.game-container');
     const menu = document.querySelector('.menu');
 
@@ -122,6 +123,23 @@ function addButtonsToPosts() {
         post.appendChild(acceptButton);
         post.appendChild(denyButton);
     });
+}
+
+function screenTransition(message) {
+    document.getElementById('screen-overlay-text').textContent = message;
+    const overlay = document.getElementById('screen-overlay')
+    overlay.style.visibility="visible";
+    overlay.style.opacity = '1'; // Fade in
+    overlay.style.transition = 'opacity 1s ease';
+}
+
+function hideOverlay() {
+    const overlay = document.getElementById('screen-overlay');
+    overlay.style.transition = 'opacity 1s ease';
+    overlay.style.opacity = '0'; // Fade out
+    setTimeout(() => {
+        overlay.style.visibility = 'hidden';
+    }, 1000); 
 }
 
 
