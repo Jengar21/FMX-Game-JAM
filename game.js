@@ -25,4 +25,5 @@ function startGame() {
         .catch(error => console.error('Error loading level1:', error));
 }
 
+
 showMenu();
