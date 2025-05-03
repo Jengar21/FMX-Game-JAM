@@ -33,8 +33,6 @@ function startGame() {
             document.getElementById('orders-container').innerHTML = html;
         })
         .catch(error => console.error('Error loading level1:', error));
-
-
 }
 
 function addButtonsToPosts() {
