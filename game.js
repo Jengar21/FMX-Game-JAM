@@ -69,17 +69,20 @@ function denyPost(postId) {
     const post = document.getElementById(postId);
 
     if (post) {
+        post.style.height = '75px';
+        post.offsetHeight;
         // Add a closing animation
-        post.style.transition = 'opacity 0.5s ease, height 0.5s ease, margin 0.5s ease';
+        post.style.transition = 'opacity 1s ease, height 0.8s ease, margin 1s ease, padding 1s ease';
         post.style.opacity = '0';
         post.style.height = '0';
         post.style.margin = '0';
+        post.style.padding = '0';
         post.style.overflow = 'hidden';
 
         // Remove the post from the DOM after the animation
         setTimeout(() => {
             post.remove();
-        }, 500);
+        }, 1000);
 
         // Remove the corresponding task
         removeTask(postId);
