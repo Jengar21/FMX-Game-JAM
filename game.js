@@ -58,6 +58,9 @@ function acceptPost(postId) {
         setTimeout(() => {
             checkmark.style.opacity = '1';
         }, 10);
+
+        // Remove the corresponding task
+        removeTask(postId);
     }
 }
 
@@ -76,6 +79,18 @@ function denyPost(postId) {
         setTimeout(() => {
             post.remove();
         }, 500);
+
+        // Remove the corresponding task
+        removeTask(postId);
+    }
+}
+
+function removeTask(postId) {
+    // Find the task in the orderbook linked to the post
+    const task = document.querySelector(`[connected-post="${postId}"]`);
+    if (task) {
+        // Remove the task from the DOM
+        task.remove();
     }
 }
 
