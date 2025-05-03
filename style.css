@@ -84,10 +84,10 @@ footer {
 }
 
 /** levels Styles **/
-
+/*******************/
+/*******************/
 
 .post-board {
-    width: 80%;
     /* Remove the margin: 2rem auto; if you want it to fill the <orders> container width */
     padding: 1rem;
     background-color: #fff;
