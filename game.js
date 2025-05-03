@@ -11,53 +11,78 @@ function loadLevel1() {
       .catch(error => console.error('Error loading level 1:', error));
 }
 
-// Function to load and display the order book
-function loadOrderBook() {
+// Function to load and display the order book HTML
+function loadOrderBookHTML() {
   const ordersContainer = document.querySelector('orders');
   if (!ordersContainer) {
       console.error("Error: <orders> element not found in HTML.");
       return;
   }
 
+  fetch('orderbook.html')
+      .then(response => response.text())
+      .then(html => {
+          ordersContainer.innerHTML = html;
+          console.log('Order book HTML loaded.');
+
+          // Now that the HTML is loaded, you might want to access
+          // elements within it and update them with the actual task data
+          // from your orderBook.js.
+          updateOrderDisplay();
+      })
+      .catch(error => console.error('Error loading order book HTML:', error));
+}
+
+// Function to update the order display with data from orderbook.js
+function updateOrderDisplay() {
+  const ordersContainer = document.querySelector('orders .post-board'); // Adjust selector if needed
+  if (!ordersContainer) {
+      console.error("Error: <orders> .post-board container not found.");
+      return;
+  }
+
   // Assuming orderBook is a global variable populated by orderbook.js
   if (typeof orderBook !== 'undefined' && orderBook.getOrders) {
-      const orders = orderBook.getOrders();
-      let ordersHTML = '<h2>Orders</h2><ul>';
-      orders.forEach(order => {
-          ordersHTML += `<li>${order.description} ${order.completed ? '(Completed)' : '(Pending)'}</li>`;
-      });
-      ordersHTML += '</ul>';
-      ordersContainer.innerHTML = ordersHTML;
-      console.log('Order book loaded.');
+      const tasks = orderBook.getOrders();
+      let tasksHTML = '';
+      tasks.forEach((task, index) => {
+          // Assuming each task should correspond to one .post div
+          const postDiv = ordersContainer.children[index + 1]; // Skip the header
 
-      // Optionally, you can set up a listener to update the order book
-      // when an order is completed (if your orderBook has such a mechanism).
-      if (orderBook.onOrderCompleted) {
-          const originalOnOrderCompleted = orderBook.onOrderCompleted;
-          orderBook.onOrderCompleted = (completedOrder) => {
-              originalOnOrderCompleted(completedOrder);
-              loadOrderBook(); // Reload the order book UI to reflect changes
-          };
-      }
+          if (postDiv && postDiv.classList.contains('post')) {
+              const postTextElement = postDiv.querySelector('.post-text');
+              if (postTextElement) {
+                  postTextElement.textContent = task.description + (task.completed ? ' (Completed)' : ' (Pending)');
+              }
+              // You can update other elements within the .post div here if needed
+          } else {
+              console.warn(`Warning: Could not find a corresponding .post element for task ${task.id}`);
+          }
+      });
   } else {
-      console.error("Error: orderBook object not found or not initialized.");
-      ordersContainer.innerHTML = '<p>Error loading orders.</p>';
+      console.error("Error: orderBook object not found or not initialized for updating display.");
   }
 }
 
 // Call both functions when the game starts
 window.addEventListener('load', () => {
   loadLevel1();
-  loadOrderBook();
+  loadOrderBookHTML();
 });
 
-// You might also want to call loadOrderBook() whenever the order book data changes
-// (e.g., when a new task is added or an existing one is completed,
-// if those actions happen after the initial load).
+// You might also want to call updateOrderDisplay() whenever the order book data changes
 if (orderBook && orderBook.onOrderAdded) {
   const originalOnOrderAdded = orderBook.onOrderAdded;
   orderBook.onOrderAdded = (newOrder) => {
       originalOnOrderAdded(newOrder);
-      loadOrderBook(); // Reload the order book UI when a new order is added
+      updateOrderDisplay();
+  };
+}
+
+if (orderBook && orderBook.onOrderCompleted) {
+  const originalOnOrderCompleted = orderBook.onOrderCompleted;
+  orderBook.onOrderCompleted = (completedOrder) => {
+      originalOnOrderCompleted(completedOrder);
+      updateOrderDisplay();
   };
 }
