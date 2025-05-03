@@ -96,7 +96,7 @@ footer {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 
    /* Add these lines for scrolling */
-    max-height: 300px; /* Adjust this value to your desired maximum height */
+    max-height: 675px; /* Adjust this value to your desired maximum height */
     overflow-y: auto;
   }
 
