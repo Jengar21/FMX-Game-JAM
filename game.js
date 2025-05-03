@@ -145,5 +145,29 @@ function hideOverlay() {
     }, 1000); 
 }
 
+function finishYourDay(level) {
+    console.log("Finishing your day...");
+    screenTransition(`Loading ${level}...`);
+
+    // Load the specified level's HTML into the feed container
+    fetch(`levels/${level}.html`)
+        .then(response => response.text())
+        .then(html => {
+            document.getElementById('post-board-container').innerHTML = html;
+
+            // Add buttons to the new posts
+            addButtonsToPosts();
+        })
+        .catch(error => console.error(`Error loading ${level}:`, error));
+
+    // Load the specified level's orderbook HTML into the orders container
+    fetch(`orderbook/orderbook-${level}.html`)
+        .then(response => response.text())
+        .then(html => {
+            document.getElementById('orders-container').innerHTML = html;
+        })
+        .catch(error => console.error(`Error loading orderbook for ${level}:`, error));
+}
+
 
 showMenu();
