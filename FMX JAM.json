@@ -92,26 +92,10 @@
   "resources": {
     "resources": [
       {
-        "file": "assets/NewSprite.png",
+        "file": "assets/White-Placeholder.png",
         "kind": "image",
-        "metadata": "{\"extension\":\".png\"}",
-        "name": "NewSprite",
-        "smoothed": true,
-        "userAdded": false
-      },
-      {
-        "file": "assets/ListArea.png",
-        "kind": "image",
-        "metadata": "{\"extension\":\".png\"}",
-        "name": "ListArea",
-        "smoothed": true,
-        "userAdded": false
-      },
-      {
-        "file": "assets/NewSprite2.png",
-        "kind": "image",
-        "metadata": "{\"extension\":\".png\"}",
-        "name": "NewSprite2",
+        "metadata": "{\"extension\":\".png\",\"pskl\":{}}",
+        "name": "White-Placeholder",
         "smoothed": true,
         "userAdded": false
       }
@@ -131,15 +115,10 @@
     },
     {
       "__REFERENCE_TO_SPLIT_OBJECT": true,
-      "referenceTo": "/layouts/orderbook"
+      "referenceTo": "/layouts/game-scene"
     }
   ],
   "externalEvents": [],
-  "eventsFunctionsExtensions": [
-    {
-      "__REFERENCE_TO_SPLIT_OBJECT": true,
-      "referenceTo": "/eventsFunctionsExtensions/simplescrollablelistextension"
-    }
-  ],
+  "eventsFunctionsExtensions": [],
   "externalLayouts": []
 }
