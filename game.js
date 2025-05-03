@@ -21,6 +21,8 @@ function startGame() {
         .then(response => response.text())
         .then(html => {
             document.getElementById('post-board-container').innerHTML = html;
+        
+            addButtonsToPosts();
         })
         .catch(error => console.error('Error loading level1:', error));
 
@@ -33,6 +35,30 @@ function startGame() {
         .catch(error => console.error('Error loading level1:', error));
 
 
+}
+
+function addButtonsToPosts() {
+    console.log("Adding buttons to posts...");
+    // Select all posts
+    const posts = document.querySelectorAll('.post');
+
+    posts.forEach(post => {
+        // Create Accept button
+        const acceptButton = document.createElement('button');
+        acceptButton.textContent = 'Accept';
+        acceptButton.className = 'accept-button';
+        acceptButton.onclick = () => alert('Post Accepted!');
+
+        // Create Deny button
+        const denyButton = document.createElement('button');
+        denyButton.textContent = 'Deny';
+        denyButton.className = 'deny-button';
+        denyButton.onclick = () => alert('Post Denied!');
+
+        // Append buttons to the post
+        post.appendChild(acceptButton);
+        post.appendChild(denyButton);
+    });
 }
 
 
