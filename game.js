@@ -112,13 +112,13 @@ function addButtonsToPosts() {
         // Create Accept button
         const acceptButton = document.createElement('button');
         acceptButton.textContent = 'Accept';
-        acceptButton.className = 'accept-button';
+        acceptButton.className = 'accept-button button';
         acceptButton.onclick = () => acceptPost(postId);
 
         // Create Deny button
         const denyButton = document.createElement('button');
         denyButton.textContent = 'Deny';
-        denyButton.className = 'deny-button';
+        denyButton.className = 'deny-button button';
         denyButton.onclick = () => denyPost(postId);
 
         // Append buttons to the post

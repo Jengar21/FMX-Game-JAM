@@ -171,11 +171,10 @@ footer {
     color: #333;
   }
 
-.accept-button, .deny-button {
+.button {
     font-family: 'Press Start 2P', cursive;
     font-size: 12px;
-    padding: 5px 10px;
-    margin: 5px;
+    padding: 15px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
@@ -198,4 +197,25 @@ footer {
 
 .deny-button:hover {
     background-color: #d32f2f;
+}
+
+.finish-day-button {
+    position: absolute;
+    bottom: 20px;
+    right: 10px;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 14px;
+    padding: 10px 20px;
+    background-color: #444;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-transform: uppercase;
+    box-shadow: 2px 2px 0px #222;
+}
+
+.finish-day-button:hover {
+    background-color: #555;
+    box-shadow: 1px 1px 0px #111;
 }
