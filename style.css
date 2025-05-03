@@ -2,6 +2,7 @@ body {
     font-family: 'Press Start 2P', cursive;
     background-color: #908d8d;
     color: #333;
+    overflow: hidden;
   } 
 
 .game-container {
@@ -12,11 +13,9 @@ body {
       "left feed orders"
       "footer footer footer";
   
-    grid-template-columns: 40% 40% 20%;
+    grid-template-columns: 38.4% 40% 20%;
     grid-template-rows: auto 1fr auto;
     grid-gap: 10px;
-  
-    height: 100vh;
   }
 
   header {
@@ -96,7 +95,7 @@ footer {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 
    /* Add these lines for scrolling */
-    max-height: 675px; /* Adjust this value to your desired maximum height */
+    max-height: calc(100vh - 150px); /* dependant on header and footer height */
     overflow-y: auto;
   }
 
