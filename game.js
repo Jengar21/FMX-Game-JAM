@@ -41,6 +41,10 @@ function addButtonsToPosts() {
     const posts = document.querySelectorAll('.post');
 
     posts.forEach(post => {
+        // Create Spacer
+        const spacer = document.createElement('div');
+        spacer.className = 'spacer';
+        spacer.style.width = '100%';
         // Create Accept button
         const acceptButton = document.createElement('button');
         acceptButton.textContent = 'Accept';
@@ -54,6 +58,7 @@ function addButtonsToPosts() {
         denyButton.onclick = () => alert('Post Denied!');
 
         // Append buttons to the post
+        post.appendChild(spacer);
         post.appendChild(acceptButton);
         post.appendChild(denyButton);
     });
