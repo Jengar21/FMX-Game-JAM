@@ -112,69 +112,127 @@ footer {
 /*******************/
 
 .post-board {
-    /* Remove the margin: 2rem auto; if you want it to fill the <orders> container width */
-    padding: 1rem;
-    background-color: #fff;
-    border: 2px solid #ccc;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    max-height: 80vh; /* Limit the height to 80% of the viewport */
+    overflow-y: auto; /* Enable vertical scrolling */
+    overflow-x: hidden; /* Prevent horizontal scrolling */
+    scrollbar-width: thin; /* For modern browsers */
+    scrollbar-color: #ccc #f9f9f9; /* Custom scrollbar colors */
+}
 
-   /* Add these lines for scrolling */
-    max-height: calc(100vh - 150px); /* dependant on header and footer height */
-    overflow-y: auto;
-  }
+  /* Custom scrollbar styling for WebKit browsers */
+ .post-board::-webkit-scrollbar {
+    width: 8px;
+}
+
+.post-board::-webkit-scrollbar-thumb {
+    background-color: #ccc;
+    border-radius: 4px;
+}
+
+.post-board::-webkit-scrollbar-thumb:hover {
+    background-color: #aaa;
+}
+
+.post-board::-webkit-scrollbar-track {
+    background-color: #f9f9f9;
+}
 
   /* The rest of your existing CSS for .myspace-header, .post, etc. remains the same */
-  .myspace-header {
-    font-size: 2rem;
+.myspace-header {
+    font-family: 'Press Start 2P', cursive, sans-serif;
+    font-size: 24px;
+    color: #333;
     text-align: center;
-    color: #444;
-    margin-bottom: 1rem;
-    font-family: 'Comic Sans MS', cursive, sans-serif;
-    text-shadow: 1px 1px 2px #aaa;
-  }
+    margin-bottom: 20px;
+}
   
-  .post {
+.post {
     display: flex;
-    align-items: flex-start;
-    gap: 1rem;
-    margin-bottom: 1rem;
-    padding: 1rem;
-    background-color: #f9f9f9;
-    border-bottom: 1px dashed #eee; /* Changed from border: 1px solid #ddd; */
+    flex-direction: column; 
+    background-color: #218aff;
+    border: 2px solid #4979ea;
     border-radius: 8px;
-    flex-wrap: wrap;
-  }
-  
-  .post-image {
-    width: 60px;
-    height: 60px;
+    margin-bottom: 20px;
+    padding: 15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease;
+}
+
+.post:hover {
+    background-color: #36b2eb;
+}
+
+  /* Post header styling */
+.post-header {
+    display: flex;
+    align-items: center; 
+    margin-bottom: 10px; 
+    gap: 10px; 
+}
+
+
+.post-image {
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
-    border: 2px solid #ccc;
-    object-fit: cover;
-  }
+    border: 2px solid #4979ea;
+}
   
-  .post-content {
-    flex: 1;
-  }
+.post-content {
+    flex-grow: 1; /* Allow the content to take up remaining space */
+    font-family: 'Press Start 2P', sans-serif;
+    font-size: 14px;
+    color: #333;
+    line-height: 1.5;
+    word-wrap: break-word; /* Ensure long words break to the next line */
+    margin-bottom: 10px;
+}
   
-  .post-author {
+.post-author {
+    font-size: 12px;
+    color: #012036;
+    text-align: left;
     margin: 0;
-    font-size: 1.2rem;
-    font-weight: bold;
-    color: #0077cc;
-  }
+}
   
-  .post-text {
-    margin: 0.5rem 0 0;
+.post-text {
+    text-align: left;
     font-size: 1rem;
     color: #333;
-  }
+}
+
+.post-content img {
+    max-width: 100%; /* Ensure images fit within the content area */
+    height: auto; /* Maintain aspect ratio */
+    margin-top: 10px; /* Add spacing above images */
+}
+
+.post-divider {
+    border: none; /* Remove default border */
+    border-top: 2px solid white; /* Add a white horizontal line */
+    margin: 10px 0; /* Add spacing above and below the line */
+    width: 100%; /* Ensure the line spans the full width of the post */
+    box-sizing: border-box; /* Include padding and border in the width calculation */
+}
+
+.button-container {
+    display: flex;
+    justify-content: space-between; /* Space between buttons */
+    gap: 10px; /* Add spacing between buttons */
+    margin-top: auto; /* Add some space above the buttons */
+}
 
 .button {
     font-family: 'Press Start 2P', cursive;
-    font-size: 12px;
-    padding: 15px;
+    font-size: 10px;
+    padding: 12px;
     border: none;
     border-radius: 5px;
     cursor: pointer;

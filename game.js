@@ -109,14 +109,15 @@ function highlightAndRemoveTask(postId) {
 function addButtonsToPosts() {
     console.log("Adding buttons to posts...");
     // Select all posts
-    const posts = document.querySelectorAll('.post');
+    const posts = document.querySelectorAll('#post-board-container .post');
 
     posts.forEach(post => {
         const postId = post.id;
-        // Create Spacer
-        const spacer = document.createElement('div');
-        spacer.className = 'spacer';
-        spacer.style.width = '100%';
+
+        // Create a container for the buttons
+        const buttonContainer = document.createElement('div');
+        buttonContainer.className = 'button-container';
+
         // Create Accept button
         const acceptButton = document.createElement('button');
         acceptButton.textContent = 'Accept';
@@ -129,10 +130,12 @@ function addButtonsToPosts() {
         denyButton.className = 'deny-button button';
         denyButton.onclick = () => denyPost(postId);
 
-        // Append buttons to the post
-        post.appendChild(spacer);
-        post.appendChild(acceptButton);
-        post.appendChild(denyButton);
+        // Append buttons to the container
+        buttonContainer.appendChild(acceptButton);
+        buttonContainer.appendChild(denyButton);
+
+        // Append the button container to the post
+        post.appendChild(buttonContainer);
     });
 }
 
