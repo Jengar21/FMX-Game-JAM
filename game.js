@@ -11,13 +11,32 @@ function showMenu() {
 }
 
 function startGame() {
-    menu = document.querySelector('.menu');
-    gameContainer = document.querySelector('.game-container');
-    gameContainer.style.display = 'grid';
-    menu.style.display = 'none';
-    showLoadingScreen("Level 1");
-    loadLevel("level1");
+    const menu = document.querySelector('.menu');
+    const introScreen = document.getElementById('first-page-container');
+    const titleElement = document.querySelector('.first-page-title');
+    const textElement = document.querySelector('.first-page-text');
+    const continueButton = document.querySelector('.start-button');
 
+    // Hide the menu and show the introductory screen
+    menu.style.display = 'none';
+    introScreen.style.display = 'flex';
+
+    // Hide the "Continue" button initially
+    continueButton.style.display = 'none';
+
+    // Apply the typewriter effect to the title
+    typeWriter("Welcome, Media Controller.", 'first-page-title', 120, () => {
+        // After the title finishes, apply the typewriter effect to the text
+        typeWriter(
+            "Step into the control room. The world's media flows through your hands. Your decisions will shape perception, a profound responsibility.",
+            'first-page-text',
+            80,
+            () => {
+                // Show the "Continue" button after the text finishes
+                continueButton.style.display = 'block';
+            }
+        );
+    });
 }
 
 function acceptPost(postId) {
@@ -121,6 +140,19 @@ function addButtonsToPosts() {
         // Append the button container to the post
         post.appendChild(buttonContainer);
     });
+}
+
+function goToLoadingPage() {
+    const introScreen = document.getElementById('first-page-container');
+    const gameContainer = document.querySelector('.game-container');
+
+    // Hide the introductory screen and show the game container
+    introScreen.style.display = 'none';
+    gameContainer.style.display = 'grid';
+
+    // Start the game by showing the loading screen and loading the first level
+    showLoadingScreen("Level 1");
+    loadLevel("level1");
 }
 
 function showLoadingScreen(level) {
