@@ -289,6 +289,12 @@ function hideOverlay() {
     setTimeout(() => {
         overlay.style.visibility = 'hidden';
 
+        //Posts have to be calulated here
+        const feed = document.querySelector('feed');
+        const posts = feed.querySelectorAll('.post');
+        amountOfPosts = posts.length;
+        console.log(`Amount of posts: ${amountOfPosts}`);
+
     }, 2000); // Wait for the fade-out animation to complete
 }
 
@@ -314,7 +320,7 @@ function loadLevel() {
             document.getElementById('orders-container').innerHTML = html;
         })
         .catch(error => console.error(`Error loading orderbook for level ${currentLevel}:`, error));
-}
+    }
 
 function startNewDay() {
     currentLevel++;
