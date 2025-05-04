@@ -17,7 +17,7 @@ function startGame() {
     menu.style.display = 'none';
     screenTransition("Loading Level 1...", "level1");
     loadLevel("level1");
-    
+
 }
 
 function acceptPost(postId) {
@@ -152,17 +152,19 @@ function hideOverlay(level) {
     const timerElement = document.getElementById('timer');
     timerElement.textContent = "2:00";
 
+
+    // Clear the existing timer
+    if (timerInterval) {
+        clearInterval(timerInterval);
+    }
+
+    // Load the level and start the timer
+    //loadLevel(level);
+    startCountdown(120); // 120 seconds = 2 minutes
+
     setTimeout(() => {
         overlay.style.visibility = 'hidden';
 
-        // Clear the existing timer
-        if (timerInterval) {
-            clearInterval(timerInterval);
-        }
-
-        // Load the level and start the timer
-        //loadLevel(level);
-        startCountdown(120); // 120 seconds = 2 minutes
     }, 1000); // Wait for the fade-out animation to complete
 }
 
