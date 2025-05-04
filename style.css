@@ -208,6 +208,13 @@ footer {
     border: 2px solid #4979ea;
     image-rendering: pixelated;
 }
+
+.content-image {
+    width: 200px;
+    height: 200px;
+    border: 2px solid #000000;
+    image-rendering: pixelated;
+}
   
 .post-content {
     flex-grow: 1; /* Allow the content to take up remaining space */
