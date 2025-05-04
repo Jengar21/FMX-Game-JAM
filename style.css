@@ -8,7 +8,9 @@ body {
 .game-container {
     background-image: url('assets/forest-quantized.png');
     background-size:72%; /* Scale the image down to fit */
-    display: grid;
+    background-position: 50% 50%;
+    transition: background-position 0.2s ease; /* Smooth transition for background movement */
+
   
     grid-template-areas:
       "header header header"
@@ -158,7 +160,7 @@ footer {
 .post {
     display: flex;
     flex-direction: column; 
-    background-color: #218aff;
+    background-color: #98c7fd;
     border: 2px solid #4979ea;
     border-radius: 8px;
     margin-bottom: 20px;
@@ -168,7 +170,7 @@ footer {
 }
 
 .post:hover {
-    background-color: #36b2eb;
+    background-color: #b3e0f5;
 }
 
   /* Post header styling */

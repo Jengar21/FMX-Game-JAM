@@ -205,5 +205,30 @@ function showGameOver() {
     gameOverScreen.style.fontFamily = "'Press Start 2P', cursive";
 }
 
+function addParallaxEffectToLeft() {
+    const leftElement = document.querySelector('left');
+    const gameContainer = document.querySelector('.game-container');
+
+    leftElement.addEventListener('mousemove', (event) => {
+        const rect = leftElement.getBoundingClientRect();
+        const mouseX = event.clientX - rect.left; // Mouse X position relative to <left>
+        const mouseY = event.clientY - rect.top;  // Mouse Y position relative to <left>
+
+        const percentX = (mouseX / rect.width) * 200; // Percentage across the width
+        const percentY = (mouseY / rect.height) * 200; // Percentage across the height
+
+        // Adjust the background position based on mouse position
+        gameContainer.style.backgroundPosition = `${50 + (percentX - 50) / 10}% ${50 + (percentY - 50) / 10}%`;
+    });
+
+    leftElement.addEventListener('mouseleave', () => {
+        // Reset the background position when the mouse leaves
+        leftElement.style.backgroundPosition = '50% 50%';
+    });
+}
+
+// Call the function to enable the parallax effect
+addParallaxEffectToLeft();
+
 
 showMenu();
