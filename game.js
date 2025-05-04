@@ -131,8 +131,6 @@ function showLoadingScreen(level) {
     // Start the typewriter effect with the level number
     typeWriter(`Loading ${level}...`, 'screen-overlay-text', 100, () => {
         console.log('Typing complete!');
-        // Optional: Automatically hide the overlay after typing is complete
-        setTimeout(() => hideOverlay(level), 2000);
     });
 }
 
