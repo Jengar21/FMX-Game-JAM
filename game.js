@@ -213,8 +213,7 @@ function finishYourDay(level) {
     console.log("Finishing your day...");
 
     if (level.toLowerCase() === 'level 5') {
-        // Show the Game Over screen if it's the end of Level 3
-        showGameOver();
+        showEndPage();
         return; // Stop further execution
     }
 
@@ -367,7 +366,45 @@ function typeWriter(text, elementId, speed = 100, callback = null) {
     }, speed);
 }
 
+function showEndPage() {
+    const gameContainer = document.querySelector('.game-container');
+    const endPageContainer = document.getElementById('end-page-container');
+    const titleElement = document.getElementById('end-page-title');
+    const textElement = document.getElementById('end-page-text');
+    const continueButton = document.querySelector('.end-button');
 
+    // Hide the game container and show the end page
+    gameContainer.style.display = 'none';
+    endPageContainer.style.display = 'flex';
 
+    // Hide the "Continue" button initially
+    continueButton.style.display = 'none';
+
+    // Apply the typewriter effect to the title
+    typeWriter("Your Job is Done.", 'end-page-title', 120, () => {
+        // After the title finishes, apply the typewriter effect to the text
+        typeWriter(
+            "Here is all the damage you made to the world. The media you controlled shaped perceptions, influenced decisions, and left a lasting impact.",
+            'end-page-text',
+            80,
+            () => {
+                // Show the "Continue" button after the text finishes
+                continueButton.style.display = 'block';
+            }
+        );
+    });
+}
+
+function showPixartPage() {
+    const endPageContainer = document.getElementById('end-page-container');
+    const pixartPageContainer = document.getElementById('pixart-page-container');
+
+    // Hide the end page and show the pixart page
+    endPageContainer.style.display = 'none';
+    pixartPageContainer.style.display = 'flex';
+
+    // Add a click event listener to the pixart page to transition to the game over page
+    pixartPageContainer.addEventListener('click', showGameOver);
+}
 
 showMenu();
