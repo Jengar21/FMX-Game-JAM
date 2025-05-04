@@ -1,3 +1,5 @@
+let timerInterval;
+
 
 function showMenu() {
     const gameContainer = document.querySelector('.game-container');
@@ -9,31 +11,13 @@ function showMenu() {
 }
 
 function startGame() {
-    screenTransition("Loading Level 1...");
-    const gameContainer = document.querySelector('.game-container');
-    const menu = document.querySelector('.menu');
-
-    // Hide the menu and show the game container
-    menu.style.display = 'none';
+    menu = document.querySelector('.menu');
+    gameContainer = document.querySelector('.game-container');
     gameContainer.style.display = 'grid';
+    menu.style.display = 'none';
+    showLoadingScreen("Level 1");
+    loadLevel("level1");
 
-    // Load level1.html into the feed container
-    fetch('levels/level1.html')
-        .then(response => response.text())
-        .then(html => {
-            document.getElementById('post-board-container').innerHTML = html;
-        
-            addButtonsToPosts();
-        })
-        .catch(error => console.error('Error loading level1:', error));
-
-    // Load level1.html into the feed container
-    fetch('orderbook/orderbook-level1.html')
-        .then(response => response.text())
-        .then(html => {
-            document.getElementById('orders-container').innerHTML = html;
-        })
-        .catch(error => console.error('Error loading level1:', error));
 }
 
 function acceptPost(postId) {
@@ -139,21 +123,58 @@ function addButtonsToPosts() {
     });
 }
 
-function screenTransition(message) {
-    document.getElementById('screen-overlay-text').textContent = message;
-    const overlay = document.getElementById('screen-overlay')
-    overlay.style.visibility="visible";
+function showLoadingScreen(level) {
+    const overlay = document.getElementById('screen-overlay');
+    overlay.style.visibility = 'visible';
     overlay.style.opacity = '1'; // Fade in
-    overlay.style.transition = 'opacity 1s ease';
+
+    // Start the typewriter effect with the level number
+    typeWriter(`Loading ${level}...`, 'screen-overlay-text', 100, () => {
+        console.log('Typing complete!');
+    });
 }
 
-function hideOverlay() {
+function hideOverlay(level) {
     const overlay = document.getElementById('screen-overlay');
     overlay.style.transition = 'opacity 1s ease';
     overlay.style.opacity = '0'; // Fade out
+
+    const timerElement = document.getElementById('timer');
+    timerElement.textContent = "2:00";
+
+    // Clear the existing timer
+    if (timerInterval) {
+        clearInterval(timerInterval);
+    }
+
+    startCountdown(120); // 120 seconds = 2 minutes
+
     setTimeout(() => {
         overlay.style.visibility = 'hidden';
-    }, 1000); 
+
+    }, 2000); // Wait for the fade-out animation to complete
+}
+
+function loadLevel(level) {
+    console.log(`Loading ${level}...`);
+
+    // Load the specified level's HTML into the feed container
+    fetch(`levels/${level.toLowerCase().replace(' ', '')}.html`)
+        .then(response => response.text())
+        .then(html => {
+            document.getElementById('post-board-container').innerHTML = html;
+            // Add buttons to the new posts
+            addButtonsToPosts();
+        })
+        .catch(error => console.error(`Error loading ${level}:`, error));
+
+    // Load the specified level's orderbook HTML into the orders container
+    fetch(`orderbook/orderbook-${level.toLowerCase().replace(' ', '')}.html`)
+        .then(response => response.text())
+        .then(html => {
+            document.getElementById('orders-container').innerHTML = html;
+        })
+        .catch(error => console.error(`Error loading orderbook for ${level}:`, error));
 }
 
 function finishYourDay(level) {
@@ -165,7 +186,12 @@ function finishYourDay(level) {
         return; // Stop further execution
     }
 
-    screenTransition(`Loading ${level}...`);
+    // Clear the existing timer
+    if (timerInterval) {
+        clearInterval(timerInterval);
+    }
+
+    showLoadingScreen(level);
 
     // Load the specified level's HTML into the feed container
     fetch(`levels/${level.toLowerCase().replace(' ', '')}.html`) // Ensure the file path matches the format
@@ -251,6 +277,65 @@ function restartGame() {
 
     console.log("Returned to the Start Game page.");
 }
+
+function startCountdown(durationInSeconds) {
+    console.log("Starting countdown...");
+    const timerElement = document.getElementById('timer');
+    let remainingTime = durationInSeconds;
+
+    if (timerInterval) {
+        clearInterval(timerInterval);
+    }
+
+    timerInterval = setInterval(() => {
+        const minutes = Math.floor(remainingTime / 60);
+        const seconds = remainingTime % 60;
+
+        // Format the time as MM:SS
+        timerElement.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+
+        // Add flashing effect when 10 seconds or less remain
+        if (remainingTime <= 10) {
+            timerElement.classList.add('flash-red');
+        }
+
+        // Check if time is up
+        if (remainingTime <= 0) {
+            clearInterval(timerInterval); // Stop the timer
+            timerElement.textContent = "Time's up!"; // Display a message
+            timerElement.classList.remove('flash-red'); // Remove flashing effect
+            handleTimeUp(); // Call a function when the timer ends
+        }
+
+        remainingTime--; // Decrease the remaining time
+    }, 1000);
+}
+
+function handleTimeUp() {
+    console.log("Time's up!");
+    // Trigger game over or any other action
+    showGameOver();
+}
+
+function typeWriter(text, elementId, speed = 100, callback = null) {
+    const element = document.getElementById(elementId);
+    let index = 0;
+
+    // Clear any existing text
+    element.textContent = '';
+
+    const interval = setInterval(() => {
+        if (index < text.length) {
+            element.textContent += text[index];
+            index++;
+        } else {
+            clearInterval(interval); // Stop the typing effect when done
+            if (callback) callback(); // Call the callback function if provided
+        }
+    }, speed);
+}
+
+
 
 
 showMenu();
