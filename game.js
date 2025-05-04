@@ -325,6 +325,21 @@ function loadLevel() {
 function startNewDay() {
     currentLevel++;
     console.log(`Starting a new day ${currentLevel}...`);
+    //update background image depending on level
+    switch (currentLevel) {
+        case 1:
+            document.querySelector('.game-container').style.backgroundImage = "url('assets/Room.png')";
+            break;
+        case 2:
+            document.querySelector('.game-container').style.backgroundImage = "url('assets/room2.png')";
+            break;
+        case 3:
+            document.querySelector('.game-container').style.backgroundImage = "url('assets/room3.png')";
+            break;
+        case 4:
+            document.querySelector('.game-container').style.backgroundImage = "url('assets/room4.png')";
+            break;
+    }
     //hide performance screen with delay
     showLoadingScreen(currentLevel);
     loadLevel();
