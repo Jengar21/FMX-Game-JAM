@@ -1,4 +1,8 @@
 let timerInterval;
+let currentLevel = 1;
+let amountOfPosts = 10;
+let correctPosts = 0;
+let incorrectPosts = 0;
 
 
 function showMenu() {
@@ -63,8 +67,7 @@ function acceptPost(postId) {
             checkmark.style.opacity = '1';
         }, 10);
 
-        // Highlight and remove the corresponding task
-        highlightAndRemoveTask(postId);
+        updateOrder(postId, 'accept-posts');
     }
 }
 
@@ -87,9 +90,51 @@ function denyPost(postId) {
             post.remove();
         }, 1000);
 
-        // Highlight and remove the corresponding task
-        highlightAndRemoveTask(postId);
+        updateOrder(postId, 'deny-posts');
     }
+}
+
+function updateOrder(postId, field) {
+    // Find all orders
+    const orders = document.querySelectorAll('#orders-container .post');
+
+    orders.forEach(order => {
+        const acceptPosts = order.getAttribute('accept-posts')?.split(' ') || [];
+        const denyPosts = order.getAttribute('deny-posts')?.split(' ') || [];
+
+        if (field === 'accept-posts' && acceptPosts.includes(postId)) {
+            correctPosts++;
+            // Remove the postId from accept-posts
+            const updatedAcceptPosts = acceptPosts.filter(id => id !== postId);
+            order.setAttribute('accept-posts', updatedAcceptPosts.join(' '));
+        } else if (field === 'deny-posts' && denyPosts.includes(postId)) {
+            correctPosts++;
+            // Remove the postId from deny-posts
+            const updatedDenyPosts = denyPosts.filter(id => id !== postId);
+            order.setAttribute('deny-posts', updatedDenyPosts.join(' '));
+        } else {
+            incorrectPosts++;
+        }
+
+        // If the order has no more IDs in both fields, highlight and remove it
+        if (
+            order.getAttribute('accept-posts') === '' &&
+            order.getAttribute('deny-posts') === ''
+        ) {
+            highlightAndRemoveOrder(order);
+        }
+    });
+}
+
+function highlightAndRemoveOrder(order) {
+    // Highlight the order in dark grey
+    order.style.transition = 'background-color 0.5s ease';
+    order.style.backgroundColor = 'darkgrey';
+
+    // Remove the order after a short delay
+    setTimeout(() => {
+        order.remove();
+    }, 1000);
 }
 
 function highlightAndRemoveTask(postId) {
@@ -142,7 +187,36 @@ function addButtonsToPosts() {
     });
 }
 
+function bossTalkAnimation() {
+    const bossImage = document.querySelector('.boss-image');
+    const bossTextElement = document.getElementById('boss-overlay-text');
+    let bossTalkingInterval;
+
+    const text = "Great job! Let's move on to the next level.";
+    let index = 0;
+
+    // Clear any existing text
+    bossTextElement.textContent = '';
+
+    // Start the animation
+    bossTalkingInterval = setInterval(() => {
+        if (index < text.length) {
+            // Switch the boss image to simulate talking
+            bossImage.src = bossImage.src.includes('boss_shut.png') ? 'assets/boss_open.png' : 'assets/boss_shut.png';
+
+            // Add the next character to the text
+            bossTextElement.textContent += text[index];
+            index++;
+        } else {
+            // Stop the animation when the text is fully written
+            clearInterval(bossTalkingInterval);
+            bossImage.src = 'assets/boss_shut.png'; // Ensure the boss ends with a closed mouth
+        }
+    }, 150); // Adjust the interval for the desired speed
+}
+
 function goToLoadingPage() {
+    console.log("Go to Loading page...");
     const introScreen = document.getElementById('first-page-container');
     const gameContainer = document.querySelector('.game-container');
 
@@ -151,22 +225,43 @@ function goToLoadingPage() {
     gameContainer.style.display = 'grid';
 
     // Start the game by showing the loading screen and loading the first level
-    showLoadingScreen("Level 1");
-    loadLevel("level1");
+    showLoadingScreen();
+    loadLevel();
 }
 
-function showLoadingScreen(level) {
+function showLoadingScreen() {
     const overlay = document.getElementById('screen-overlay');
     overlay.style.visibility = 'visible';
     overlay.style.opacity = '1'; // Fade in
 
     // Start the typewriter effect with the level number
-    typeWriter(`Loading ${level}...`, 'screen-overlay-text', 100, () => {
+    typeWriter(`Loading Level ${currentLevel}...`, 'screen-overlay-text', 100, () => {
         console.log('Typing complete!');
     });
 }
 
-function hideOverlay(level) {
+function showPerformanceScreen() {
+    const overlay = document.getElementById('results-screen');
+    overlay.style.visibility = 'visible';
+    overlay.style.opacity = '1'; // Fade in
+
+    // Start the typewriter effect with the level number
+    typeWriter(`${correctPosts / amountOfPosts}`, 'correct-answers-count', 100, () => {
+        console.log('Typing complete!');
+    });
+    setTimeout(() => {
+        typeWriter(`${timerInterval}`, 'time-needed', 100, () => {
+            console.log('Typing complete!');
+        });
+    }, 1000);
+
+    setTimeout(() => {
+        bossTalkAnimation();
+    }, 2000); // Wait for the fade-in animation to complete
+
+}
+
+function hideOverlay() {
     const overlay = document.getElementById('screen-overlay');
     overlay.style.transition = 'opacity 1s ease';
     overlay.style.opacity = '0'; // Fade out
@@ -187,34 +282,48 @@ function hideOverlay(level) {
     }, 2000); // Wait for the fade-out animation to complete
 }
 
-function loadLevel(level) {
-    console.log(`Loading ${level}...`);
+function loadLevel() {
+    console.log(`Loading ${currentLevel}...`);
 
     // Load the specified level's HTML into the feed container
-    fetch(`levels/${level.toLowerCase().replace(' ', '')}.html`)
+    fetch(`levels/level${currentLevel}.html`)
         .then(response => response.text())
         .then(html => {
             document.getElementById('post-board-container').innerHTML = html;
             // Add buttons to the new posts
             addButtonsToPosts();
         })
-        .catch(error => console.error(`Error loading ${level}:`, error));
+        .catch(error => console.error(`Error loading level ${currentLevel}:`, error));
 
     // Load the specified level's orderbook HTML into the orders container
-    fetch(`orderbook/orderbook-${level.toLowerCase().replace(' ', '')}.html`)
+    fetch(`orderbook/orderbook-level${currentLevel}.html`)
         .then(response => response.text())
         .then(html => {
             document.getElementById('orders-container').innerHTML = html;
         })
-        .catch(error => console.error(`Error loading orderbook for ${level}:`, error));
+        .catch(error => console.error(`Error loading orderbook for level ${currentLevel}:`, error));
 }
 
-function finishYourDay(level) {
-    console.log("Finishing your day...");
+function startNewDay() {
+    currentLevel++;
+    console.log(`Starting a new day ${currentLevel}...`);
+    //hide performance screen with delay
+    showLoadingScreen(currentLevel);
 
-    if (level.toLowerCase() === 'level 5') {
+    const overlay = document.getElementById('results-screen');
+    overlay.style.opacity = '0'; // Fade out
+
+    setTimeout(() => {
+        overlay.style.visibility = 'hidden';
+    }, 1000);
+}
+
+function finishYourDay() {
+    console.log(`Finishing your day ${currentLevel}...`);
+
+    if (currentLevel === 5) {
         // Show the Game Over screen if it's the end of Level 3
-        showGameOver();
+        showEndPage();
         return; // Stop further execution
     }
 
@@ -223,10 +332,10 @@ function finishYourDay(level) {
         clearInterval(timerInterval);
     }
 
-    showLoadingScreen(level);
+    showPerformanceScreen();
 
     // Load the specified level's HTML into the feed container
-    fetch(`levels/${level.toLowerCase().replace(' ', '')}.html`) // Ensure the file path matches the format
+    fetch(`levels/level${currentLevel}.html`) // Ensure the file path matches the format
         .then(response => response.text())
         .then(html => {
             document.getElementById('post-board-container').innerHTML = html;
@@ -234,15 +343,15 @@ function finishYourDay(level) {
             // Add buttons to the new posts
             addButtonsToPosts();
         })
-        .catch(error => console.error(`Error loading ${level}:`, error));
+        .catch(error => console.error(`Error loading ${currentLevel}:`, error));
 
     // Load the specified level's orderbook HTML into the orders container
-    fetch(`orderbook/orderbook-${level.toLowerCase().replace(' ', '')}.html`)
+    fetch(`orderbook/orderbook-level${currentLevel}.html`)
         .then(response => response.text())
         .then(html => {
             document.getElementById('orders-container').innerHTML = html;
         })
-        .catch(error => console.error(`Error loading orderbook for ${level}:`, error));
+        .catch(error => console.error(`Error loading orderbook for ${currentLevel}:`, error));
 }
 
 function showGameOver() {
@@ -367,7 +476,45 @@ function typeWriter(text, elementId, speed = 100, callback = null) {
     }, speed);
 }
 
+function showEndPage() {
+    const gameContainer = document.querySelector('.game-container');
+    const endPageContainer = document.getElementById('end-page-container');
+    const titleElement = document.getElementById('end-page-title');
+    const textElement = document.getElementById('end-page-text');
+    const continueButton = document.querySelector('.end-button');
 
+    // Hide the game container and show the end page
+    gameContainer.style.display = 'none';
+    endPageContainer.style.display = 'flex';
 
+    // Hide the "Continue" button initially
+    continueButton.style.display = 'none';
+
+    // Apply the typewriter effect to the title
+    typeWriter("Your Job is Done.", 'end-page-title', 120, () => {
+        // After the title finishes, apply the typewriter effect to the text
+        typeWriter(
+            "Here is all the damage you made to the world. The media you controlled shaped perceptions, influenced decisions, and left a lasting impact.",
+            'end-page-text',
+            80,
+            () => {
+                // Show the "Continue" button after the text finishes
+                continueButton.style.display = 'block';
+            }
+        );
+    });
+}
+
+function showPixartPage() {
+    const endPageContainer = document.getElementById('end-page-container');
+    const pixartPageContainer = document.getElementById('pixart-page-container');
+
+    // Hide the end page and show the pixart page
+    endPageContainer.style.display = 'none';
+    pixartPageContainer.style.display = 'flex';
+
+    // Add a click event listener to the pixart page to transition to the game over page
+    pixartPageContainer.addEventListener('click', showGameOver);
+}
 
 showMenu();

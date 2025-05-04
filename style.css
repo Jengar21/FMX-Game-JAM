@@ -84,13 +84,14 @@ footer {
     box-shadow: 1px 1px 0px #111;
 }
 
-#screen-overlay {
+#screen-overlay, #results-screen {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
     background-color: black;
+    color: white;
     display: flex;
     pointer-events: auto;
     visibility: hidden;
@@ -101,7 +102,26 @@ footer {
     transition: opacity 2s ease; /* Smooth fade-out */
 }
 
+#results-screen {
+    padding: 20px;
+    display: flex; /* Hidden by default */
+    flex-direction: column;
+}
+
+.boss-talking {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    align-content: center;
+}
+
+.boss-image {
+    width: 100px;
+    height: 100px;
+}
+
 .transition-text {
+    padding: 20px;
     font-family: 'Press Start 2P', cursive;
     font-size: 2rem;
     color: white;
@@ -389,5 +409,80 @@ footer {
 }
 
 .start-button:hover {
+    background-color: #1e90ff;
+}
+
+/* End Page Styles */
+.end-page-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: black;
+    font-family: 'Press Start 2P', cursive;
+    text-align: center;
+}
+
+.end-page-title {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    text-shadow: 0 0 5px white, 0 0 10px white, 0 0 20px white;
+}
+
+.end-page-text {
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+    max-width: 600px;
+    line-height: 1.5;
+    color: white;
+}
+
+.end-button {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 1rem;
+    padding: 10px 20px;
+    background-color: #36b2eb;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.end-button:hover {
+    background-color: #1e90ff;
+}
+
+/* Pixart Page Styles */
+.pixart-page-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: black;
+    text-align: center;
+}
+
+.pixart-image {
+    max-width: 80%;
+    height: auto;
+    margin-bottom: 20px;
+}
+
+.pixart-button {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 1rem;
+    padding: 10px 20px;
+    background-color: #36b2eb;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.pixart-button:hover {
     background-color: #1e90ff;
 }
