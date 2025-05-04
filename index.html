@@ -38,6 +38,14 @@
             <button class="start Game" onclick="startGame()">Start Game</button>
         </div>
     </div>
+
+    <!-- Introductory Screen -->
+    <div id="first-page-container" class="first-page-container" style="display: none;">
+      <h1 class="first-page-title" id="first-page-title"></h1>
+      <p class="first-page-text" id="first-page-text"></p>
+      <button class="start-button" onclick="goToLoadingPage()" style="display: none;">Continue</button>
+    </div>
+
     <div class="game-container">
         <header>
           <!-- Header content -->
@@ -60,6 +68,18 @@
         </footer>
       </div>
   </body>
+
+  <!-- End Page -->
+   <div id="end-page-container" class="end-page-container" style="display: none;">
+    <h1 class="end-page-title" id="end-page-title"></h1>
+    <p class="end-page-text" id="end-page-text"></p>
+    <button class="end-button" onclick="showPixartPage()" style="display: none;">End</button>
+  </div>
+
+  <!-- Pixart Page -->
+  <div id="pixart-page-container" class="pixart-page-container" style="display: none;">
+    <img src="assets/pixart-world.png" alt="Pixart of the World" class="pixart-image">
+  </div>
 
   <!-- Import game.js -->
 <script src="game.js"></script>
