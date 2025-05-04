@@ -2,6 +2,7 @@ let timerInterval;
 let currentLevel = 1;
 let amountOfPosts = 10;
 let correctPosts = 0;
+let incorrectPosts = 0;
 
 
 function showMenu() {
@@ -66,8 +67,7 @@ function acceptPost(postId) {
             checkmark.style.opacity = '1';
         }, 10);
 
-        // Highlight and remove the corresponding task
-        highlightAndRemoveTask(postId);
+        updateOrder(postId, 'accept-posts');
     }
 }
 
@@ -90,9 +90,51 @@ function denyPost(postId) {
             post.remove();
         }, 1000);
 
-        // Highlight and remove the corresponding task
-        highlightAndRemoveTask(postId);
+        updateOrder(postId, 'deny-posts');
     }
+}
+
+function updateOrder(postId, field) {
+    // Find all orders
+    const orders = document.querySelectorAll('#orders-container .post');
+
+    orders.forEach(order => {
+        const acceptPosts = order.getAttribute('accept-posts')?.split(' ') || [];
+        const denyPosts = order.getAttribute('deny-posts')?.split(' ') || [];
+
+        if (field === 'accept-posts' && acceptPosts.includes(postId)) {
+            correctPosts++;
+            // Remove the postId from accept-posts
+            const updatedAcceptPosts = acceptPosts.filter(id => id !== postId);
+            order.setAttribute('accept-posts', updatedAcceptPosts.join(' '));
+        } else if (field === 'deny-posts' && denyPosts.includes(postId)) {
+            correctPosts++;
+            // Remove the postId from deny-posts
+            const updatedDenyPosts = denyPosts.filter(id => id !== postId);
+            order.setAttribute('deny-posts', updatedDenyPosts.join(' '));
+        } else {
+            incorrectPosts++;
+        }
+
+        // If the order has no more IDs in both fields, highlight and remove it
+        if (
+            order.getAttribute('accept-posts') === '' &&
+            order.getAttribute('deny-posts') === ''
+        ) {
+            highlightAndRemoveOrder(order);
+        }
+    });
+}
+
+function highlightAndRemoveOrder(order) {
+    // Highlight the order in dark grey
+    order.style.transition = 'background-color 0.5s ease';
+    order.style.backgroundColor = 'darkgrey';
+
+    // Remove the order after a short delay
+    setTimeout(() => {
+        order.remove();
+    }, 1000);
 }
 
 function highlightAndRemoveTask(postId) {
@@ -174,6 +216,7 @@ function bossTalkAnimation() {
 }
 
 function goToLoadingPage() {
+    console.log("Go to Loading page...");
     const introScreen = document.getElementById('first-page-container');
     const gameContainer = document.querySelector('.game-container');
 
