@@ -349,3 +349,45 @@ footer {
     border-radius: 5px;
     z-index: 1000; /* Ensure it appears above other elements */
 }
+
+/* Introductory Screen Styles */
+.first-page-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: black;
+    font-family: 'Press Start 2P', cursive;
+    text-align: center;
+}
+
+.first-page-title {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    text-shadow: 0 0 5px white, 0 0 10px white, 0 0 20px white;
+}
+
+.first-page-text {
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+    max-width: 600px;
+    line-height: 1.5;
+    color: white;
+}
+
+.start-button {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 1rem;
+    padding: 10px 20px;
+    background-color: #36b2eb;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.start-button:hover {
+    background-color: #1e90ff;
+}

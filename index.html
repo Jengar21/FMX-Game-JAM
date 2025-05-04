@@ -27,6 +27,14 @@
             <button class="start Game" onclick="startGame()">Start Game</button>
         </div>
     </div>
+
+    <!-- Introductory Screen -->
+    <div id="first-page-container" class="first-page-container" style="display: none;">
+      <h1 class="first-page-title" id="first-page-title"></h1>
+      <p class="first-page-text" id="first-page-text"></p>
+      <button class="start-button" onclick="goToLoadingPage()" style="display: none;">Continue</button>
+    </div>
+
     <div class="game-container">
         <header>
           <!-- Header content -->
