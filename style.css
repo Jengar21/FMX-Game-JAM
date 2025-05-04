@@ -157,10 +157,29 @@ footer {
     margin-bottom: 20px;
 }
   
-.post {
+.post-row {
     display: flex;
-    flex-direction: column; 
-    background-color: #98c7fd;
+    flex-direction: row; 
+    flex-wrap:wrap;
+    width:100%
+}
+
+.post-column {
+    display:flex;
+    flex-direction: column;
+    flex-basis: 100%;
+    flex:1;
+}
+
+.post-column2 {
+    display:flex;
+    flex-direction: column;
+    flex-basis: 100%;
+    flex:2;
+}
+
+.post {
+    background-color: #218aff;
     border: 2px solid #4979ea;
     border-radius: 8px;
     margin-bottom: 20px;
@@ -175,10 +194,13 @@ footer {
 
   /* Post header styling */
 .post-header {
-    display: flex;
+   /* display: flex;*/
     align-items: center; 
     margin-bottom: 10px; 
     gap: 10px; 
+    border-right: 2px solid white;
+    height: 100%;
+    box-sizing: border-box;
 }
 
 
@@ -197,6 +219,7 @@ footer {
     line-height: 1.5;
     word-wrap: break-word; /* Ensure long words break to the next line */
     margin-bottom: 10px;
+    padding-left: 15px; 
 }
   
 .post-author {
@@ -208,7 +231,7 @@ footer {
   
 .post-text {
     text-align: left;
-    font-size: 1rem;
+    font-size: 12px;
     color: #333;
 }
 
@@ -216,14 +239,6 @@ footer {
     max-width: 100%; /* Ensure images fit within the content area */
     height: auto; /* Maintain aspect ratio */
     margin-top: 10px; /* Add spacing above images */
-}
-
-.post-divider {
-    border: none; /* Remove default border */
-    border-top: 2px solid white; /* Add a white horizontal line */
-    margin: 10px 0; /* Add spacing above and below the line */
-    width: 100%; /* Ensure the line spans the full width of the post */
-    box-sizing: border-box; /* Include padding and border in the width calculation */
 }
 
 .button-container {
