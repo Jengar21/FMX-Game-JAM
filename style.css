@@ -133,7 +133,6 @@ footer {
 }
 
 .post-board::-webkit-scrollbar-thumb {
-    background-color: #ccc;
     border-radius: 4px;
 }
 
