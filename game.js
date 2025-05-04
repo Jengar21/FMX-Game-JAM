@@ -285,6 +285,8 @@ function hideOverlay() {
 function loadLevel() {
     console.log(`Loading ${currentLevel}...`);
 
+    title = document.getElementById('title');
+    title.innerHTML = `Level ${currentLevel}`;
     // Load the specified level's HTML into the feed container
     fetch(`levels/level${currentLevel}.html`)
         .then(response => response.text())
