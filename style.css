@@ -8,7 +8,7 @@ body {
 .game-container {
     background-image: url('assets/Room.png');
     image-rendering: pixelated; /* Turn off anti-aliasing for the background image */
-    background-size: 20%; /* Scale the image down to fit */
+    background-size: 30%; /* Scale the image down to fit */
     background-position: 50% 50%;
     transition: background-position 0.1s ease; /* Smooth transition for background movement */
 
@@ -18,7 +18,7 @@ body {
       "left feed orders"
       "footer footer footer";
   
-    grid-template-columns: 38.4% 40% 20%;
+    grid-template-columns: 21% 50% 27%;
     grid-template-rows: auto 1fr auto;
     grid-gap: 10px;
   }
