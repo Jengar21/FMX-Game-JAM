@@ -277,3 +277,38 @@ footer {
     background-color: #555;
     box-shadow: 1px 1px 0px #111;
 }
+
+#game-over-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    color: white;
+    display: none; /* Hidden by default */
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    z-index: 1000; /* Ensure it appears on top of other elements */
+}
+
+.game-over-text {
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+.restart-button {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 1rem;
+    padding: 10px 20px;
+    background-color: #36b2eb;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.restart-button:hover {
+    background-color: #1e90ff;
+}

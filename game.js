@@ -158,10 +158,17 @@ function hideOverlay() {
 
 function finishYourDay(level) {
     console.log("Finishing your day...");
+
+    if (level.toLowerCase() === 'level 5') {
+        // Show the Game Over screen if it's the end of Level 3
+        showGameOver();
+        return; // Stop further execution
+    }
+
     screenTransition(`Loading ${level}...`);
 
     // Load the specified level's HTML into the feed container
-    fetch(`levels/${level}.html`)
+    fetch(`levels/${level.toLowerCase().replace(' ', '')}.html`) // Ensure the file path matches the format
         .then(response => response.text())
         .then(html => {
             document.getElementById('post-board-container').innerHTML = html;
@@ -172,12 +179,30 @@ function finishYourDay(level) {
         .catch(error => console.error(`Error loading ${level}:`, error));
 
     // Load the specified level's orderbook HTML into the orders container
-    fetch(`orderbook/orderbook-${level}.html`)
+    fetch(`orderbook/orderbook-${level.toLowerCase().replace(' ', '')}.html`)
         .then(response => response.text())
         .then(html => {
             document.getElementById('orders-container').innerHTML = html;
         })
         .catch(error => console.error(`Error loading orderbook for ${level}:`, error));
+}
+
+function showGameOver() {
+    console.log("Game Over...");
+    // Hide the game container and menu
+    document.querySelector('.game-container').style.display = 'none';
+    document.querySelector('.menu').style.display = 'none';
+
+    // Show the Game Over screen
+    const gameOverScreen = document.getElementById('game-over-screen');
+    gameOverScreen.style.display = 'flex';
+    gameOverScreen.style.flexDirection = 'column';
+    gameOverScreen.style.alignItems = 'center';
+    gameOverScreen.style.justifyContent = 'center';
+    gameOverScreen.style.height = '100vh';
+    gameOverScreen.style.backgroundColor = '#000';
+    gameOverScreen.style.color = '#fff';
+    gameOverScreen.style.fontFamily = "'Press Start 2P', cursive";
 }
 
 
