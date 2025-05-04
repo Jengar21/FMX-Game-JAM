@@ -309,6 +309,7 @@ function startNewDay() {
     console.log(`Starting a new day ${currentLevel}...`);
     //hide performance screen with delay
     showLoadingScreen(currentLevel);
+    loadLevel();
 
     const overlay = document.getElementById('results-screen');
     overlay.style.opacity = '0'; // Fade out
