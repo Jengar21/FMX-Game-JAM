@@ -230,5 +230,27 @@ function addParallaxEffectToLeft() {
 // Call the function to enable the parallax effect
 addParallaxEffectToLeft();
 
+function restartGame() {
+    console.log("Restarting game...");
+
+    // Hide the Game Over screen
+    const gameOverScreen = document.getElementById('game-over-screen');
+    gameOverScreen.style.display = 'none';
+
+    // Show the main menu
+    const menu = document.querySelector('.menu');
+    menu.style.display = 'block';
+
+    // Hide the game container
+    const gameContainer = document.querySelector('.game-container');
+    gameContainer.style.display = 'none';
+
+    // Clear the post board and orders container
+    document.getElementById('post-board-container').innerHTML = '';
+    document.getElementById('orders-container').innerHTML = '';
+
+    console.log("Returned to the Start Game page.");
+}
+
 
 showMenu();
