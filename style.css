@@ -31,19 +31,16 @@ body {
 
 left {
     grid-area: left;
-    /* background-color: #ddd; */
     padding: 10px;
 }
 
 feed {
     grid-area: feed;
-    background-color: #fff;
     padding: 10px;
 }
 
 orders {
     grid-area: orders;
-    background-color: #ddd;
     padding: 10px;
 }
 
