@@ -118,8 +118,8 @@ footer {
     margin: 0 auto;
     padding: 20px;
     background-color: #f9f9f9;
-    border: 1px solid #ddd;
-    border-radius: 8px;
+    border: 4px solid #000000;
+    border-radius: 2px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     max-height: 80vh; /* Limit the height to 80% of the viewport */
     overflow-y: auto; /* Enable vertical scrolling */
@@ -176,9 +176,9 @@ footer {
 }
 
 .post {
-    background-color: #218aff;
-    border: 2px solid #4979ea;
-    border-radius: 8px;
+    background-color: #f1e1a6;
+    border: 4px solid #f5a627;
+    border-radius: 4px;
     margin-bottom: 20px;
     padding: 15px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
