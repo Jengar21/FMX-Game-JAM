@@ -341,22 +341,3 @@ footer {
     border-radius: 5px;
     z-index: 1000; /* Ensure it appears above other elements */
 }
-
-.timer.flash-red {
-    animation: flash-red 1s infinite; /* Flash every second */
-}
-
-@keyframes flash-red {
-    0% {
-        background-color: rgba(255, 0, 0, 0.7); /* Red background */
-        color: white;
-    }
-    50% {
-        background-color: rgba(255, 0, 0, 0.3); /* Lighter red */
-        color: white;
-    }
-    100% {
-        background-color: rgba(255, 0, 0, 0.7); /* Red background */
-        color: white;
-    }
-}

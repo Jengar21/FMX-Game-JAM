@@ -15,7 +15,7 @@ function startGame() {
     gameContainer = document.querySelector('.game-container');
     gameContainer.style.display = 'grid';
     menu.style.display = 'none';
-    screenTransition("Loading Level 1...", "level1");
+    showLoadingScreen("Level 1");
     loadLevel("level1");
 
 }
@@ -123,25 +123,15 @@ function addButtonsToPosts() {
     });
 }
 
-function screenTransition(message, level) {
+function showLoadingScreen(level) {
     const overlay = document.getElementById('screen-overlay');
-    const overlayText = document.getElementById('screen-overlay-text');
-
-    overlayText.textContent = message;
-    overlay.style.visibility = "visible";
+    overlay.style.visibility = 'visible';
     overlay.style.opacity = '1'; // Fade in
-    overlay.style.transition = 'opacity 1s ease';
 
-    // Automatically transition to the next level after 5 seconds
-    const autoTransition = setTimeout(() => {
-        hideOverlay(level);
-    }, 5000);
-
-    // Allow the player to click to transition immediately
-    overlay.onclick = () => {
-        clearTimeout(autoTransition); // Cancel the auto-transition
-        hideOverlay(level);
-    };
+    // Start the typewriter effect with the level number
+    typeWriter(`Loading ${level}...`, 'screen-overlay-text', 100, () => {
+        console.log('Typing complete!');
+    });
 }
 
 function hideOverlay(level) {
@@ -152,20 +142,17 @@ function hideOverlay(level) {
     const timerElement = document.getElementById('timer');
     timerElement.textContent = "2:00";
 
-
     // Clear the existing timer
     if (timerInterval) {
         clearInterval(timerInterval);
     }
 
-    // Load the level and start the timer
-    //loadLevel(level);
     startCountdown(120); // 120 seconds = 2 minutes
 
     setTimeout(() => {
         overlay.style.visibility = 'hidden';
 
-    }, 1000); // Wait for the fade-out animation to complete
+    }, 2000); // Wait for the fade-out animation to complete
 }
 
 function loadLevel(level) {
@@ -176,12 +163,8 @@ function loadLevel(level) {
         .then(response => response.text())
         .then(html => {
             document.getElementById('post-board-container').innerHTML = html;
-
             // Add buttons to the new posts
             addButtonsToPosts();
-
-            // Start the 2-minute countdown timer
-            //startCountdown(120); // 120 seconds = 2 minutes
         })
         .catch(error => console.error(`Error loading ${level}:`, error));
 
@@ -208,7 +191,7 @@ function finishYourDay(level) {
         clearInterval(timerInterval);
     }
 
-    screenTransition(`Loading ${level}...`, level);
+    showLoadingScreen(level);
 
     // Load the specified level's HTML into the feed container
     fetch(`levels/${level.toLowerCase().replace(' ', '')}.html`) // Ensure the file path matches the format
@@ -333,6 +316,26 @@ function handleTimeUp() {
     // Trigger game over or any other action
     showGameOver();
 }
+
+function typeWriter(text, elementId, speed = 100, callback = null) {
+    const element = document.getElementById(elementId);
+    let index = 0;
+
+    // Clear any existing text
+    element.textContent = '';
+
+    const interval = setInterval(() => {
+        if (index < text.length) {
+            element.textContent += text[index];
+            index++;
+        } else {
+            clearInterval(interval); // Stop the typing effect when done
+            if (callback) callback(); // Call the callback function if provided
+        }
+    }, speed);
+}
+
+
 
 
 showMenu();
