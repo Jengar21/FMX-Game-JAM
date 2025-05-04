@@ -190,7 +190,9 @@ function addButtonsToPosts() {
 function bossTalkAnimation() {
     const bossImage = document.querySelector('.boss-image');
     const bossTextElement = document.getElementById('boss-overlay-text');
-    let bossTalkingInterval;
+    const bossVoiceSound = new Audio('assets/audio/boss-voice.mp3');
+    bossVoiceSound.volume = 1.0; // Set the volume to 100%
+    bossVoiceSound.loop = true; // Enable looping for the sound
 
     const text = "Great job! Let's move on to the next level.";
     let index = 0;
@@ -198,8 +200,12 @@ function bossTalkAnimation() {
     // Clear any existing text
     bossTextElement.textContent = '';
 
+    // Start playing the boss voice sound
+    bossVoiceSound.currentTime = 2.0; // Start from the beginning
+    bossVoiceSound.play().catch(error => console.error("Audio playback error:", error));
+
     // Start the animation
-    bossTalkingInterval = setInterval(() => {
+    const bossTalkingInterval = setInterval(() => {
         if (index < text.length) {
             // Switch the boss image to simulate talking
             bossImage.src = bossImage.src.includes('boss_shut.png') ? 'assets/boss_open.png' : 'assets/boss_shut.png';
@@ -211,6 +217,10 @@ function bossTalkAnimation() {
             // Stop the animation when the text is fully written
             clearInterval(bossTalkingInterval);
             bossImage.src = 'assets/boss_shut.png'; // Ensure the boss ends with a closed mouth
+
+            // Stop the boss voice sound
+            bossVoiceSound.pause();
+            bossVoiceSound.currentTime = 0; // Reset the sound to the beginning
         }
     }, 150); // Adjust the interval for the desired speed
 }
@@ -468,12 +478,25 @@ function typeWriter(text, elementId, speed = 100, callback = null) {
     // Clear any existing text
     element.textContent = '';
 
+    // Create or reset the typewriter sound
+    const typewriterSound = new Audio('assets/audio/typewriter-machine.mp3');
+    typewriterSound.volume = 1.0; // Set the volume to 100%
+
     const interval = setInterval(() => {
         if (index < text.length) {
             element.textContent += text[index];
             index++;
+
+            // Play the typewriter sound starting at 3 seconds
+            typewriterSound.currentTime = 3.0; // Start at 3 seconds
+            typewriterSound.play().catch(error => console.error("Audio playback error:", error));
         } else {
             clearInterval(interval); // Stop the typing effect when done
+
+            // Stop the typewriter sound
+            typewriterSound.pause();
+            typewriterSound.currentTime = 0; // Reset the sound to the beginning
+
             if (callback) callback(); // Call the callback function if provided
         }
     }, speed);
