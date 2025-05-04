@@ -1,4 +1,7 @@
 let timerInterval;
+let currentLevel = 1;
+let amountOfPosts = 10;
+let correctPosts = 0;
 
 
 function showMenu() {
@@ -15,8 +18,9 @@ function startGame() {
     gameContainer = document.querySelector('.game-container');
     gameContainer.style.display = 'grid';
     menu.style.display = 'none';
-    showLoadingScreen("Level 1");
-    loadLevel("level1");
+    showLoadingScreen();
+    loadLevel();
+    currentLevel = 1;
 
 }
 
@@ -123,18 +127,67 @@ function addButtonsToPosts() {
     });
 }
 
-function showLoadingScreen(level) {
+function bossTalkAnimation() {
+    const bossImage = document.querySelector('.boss-image');
+    const bossTextElement = document.getElementById('boss-overlay-text');
+    let bossTalkingInterval;
+
+    const text = "Great job! Let's move on to the next level.";
+    let index = 0;
+
+    // Clear any existing text
+    bossTextElement.textContent = '';
+
+    // Start the animation
+    bossTalkingInterval = setInterval(() => {
+        if (index < text.length) {
+            // Switch the boss image to simulate talking
+            bossImage.src = bossImage.src.includes('boss_shut.png') ? 'assets/boss_open.png' : 'assets/boss_shut.png';
+
+            // Add the next character to the text
+            bossTextElement.textContent += text[index];
+            index++;
+        } else {
+            // Stop the animation when the text is fully written
+            clearInterval(bossTalkingInterval);
+            bossImage.src = 'assets/boss_shut.png'; // Ensure the boss ends with a closed mouth
+        }
+    }, 150); // Adjust the interval for the desired speed
+}
+
+function showLoadingScreen() {
     const overlay = document.getElementById('screen-overlay');
     overlay.style.visibility = 'visible';
     overlay.style.opacity = '1'; // Fade in
 
     // Start the typewriter effect with the level number
-    typeWriter(`Loading ${level}...`, 'screen-overlay-text', 100, () => {
+    typeWriter(`Loading Level ${currentLevel}...`, 'screen-overlay-text', 100, () => {
         console.log('Typing complete!');
     });
 }
 
-function hideOverlay(level) {
+function showPerformanceScreen() {
+    const overlay = document.getElementById('results-screen');
+    overlay.style.visibility = 'visible';
+    overlay.style.opacity = '1'; // Fade in
+
+    // Start the typewriter effect with the level number
+    typeWriter(`${correctPosts / amountOfPosts}`, 'correct-answers-count', 100, () => {
+        console.log('Typing complete!');
+    });
+    setTimeout(() => {
+        typeWriter(`${timerInterval}`, 'time-needed', 100, () => {
+            console.log('Typing complete!');
+        });
+    }, 1000);
+
+    setTimeout(() => {
+        bossTalkAnimation();
+    }, 2000); // Wait for the fade-in animation to complete
+
+}
+
+function hideOverlay() {
     const overlay = document.getElementById('screen-overlay');
     overlay.style.transition = 'opacity 1s ease';
     overlay.style.opacity = '0'; // Fade out
@@ -155,32 +208,46 @@ function hideOverlay(level) {
     }, 2000); // Wait for the fade-out animation to complete
 }
 
-function loadLevel(level) {
-    console.log(`Loading ${level}...`);
+function loadLevel() {
+    console.log(`Loading ${currentLevel}...`);
 
     // Load the specified level's HTML into the feed container
-    fetch(`levels/${level.toLowerCase().replace(' ', '')}.html`)
+    fetch(`levels/level${currentLevel}.html`)
         .then(response => response.text())
         .then(html => {
             document.getElementById('post-board-container').innerHTML = html;
             // Add buttons to the new posts
             addButtonsToPosts();
         })
-        .catch(error => console.error(`Error loading ${level}:`, error));
+        .catch(error => console.error(`Error loading level ${currentLevel}:`, error));
 
     // Load the specified level's orderbook HTML into the orders container
-    fetch(`orderbook/orderbook-${level.toLowerCase().replace(' ', '')}.html`)
+    fetch(`orderbook/orderbook-level${currentLevel}.html`)
         .then(response => response.text())
         .then(html => {
             document.getElementById('orders-container').innerHTML = html;
         })
-        .catch(error => console.error(`Error loading orderbook for ${level}:`, error));
+        .catch(error => console.error(`Error loading orderbook for level ${currentLevel}:`, error));
 }
 
-function finishYourDay(level) {
-    console.log("Finishing your day...");
+function startNewDay() {
+    currentLevel++;
+    console.log(`Starting a new day ${currentLevel}...`);
+    //hide performance screen with delay
+    showLoadingScreen(currentLevel);
 
-    if (level.toLowerCase() === 'level 5') {
+    const overlay = document.getElementById('results-screen');
+    overlay.style.opacity = '0'; // Fade out
+
+    setTimeout(() => {
+        overlay.style.visibility = 'hidden';
+    }, 1000);
+}
+
+function finishYourDay() {
+    console.log(`Finishing your day ${currentLevel}...`);
+
+    if (currentLevel === 5) {
         // Show the Game Over screen if it's the end of Level 3
         showGameOver();
         return; // Stop further execution
@@ -191,10 +258,10 @@ function finishYourDay(level) {
         clearInterval(timerInterval);
     }
 
-    showLoadingScreen(level);
+    showPerformanceScreen();
 
     // Load the specified level's HTML into the feed container
-    fetch(`levels/${level.toLowerCase().replace(' ', '')}.html`) // Ensure the file path matches the format
+    fetch(`levels/level${currentLevel}.html`) // Ensure the file path matches the format
         .then(response => response.text())
         .then(html => {
             document.getElementById('post-board-container').innerHTML = html;
@@ -202,15 +269,15 @@ function finishYourDay(level) {
             // Add buttons to the new posts
             addButtonsToPosts();
         })
-        .catch(error => console.error(`Error loading ${level}:`, error));
+        .catch(error => console.error(`Error loading ${currentLevel}:`, error));
 
     // Load the specified level's orderbook HTML into the orders container
-    fetch(`orderbook/orderbook-${level.toLowerCase().replace(' ', '')}.html`)
+    fetch(`orderbook/orderbook-level${currentLevel}.html`)
         .then(response => response.text())
         .then(html => {
             document.getElementById('orders-container').innerHTML = html;
         })
-        .catch(error => console.error(`Error loading orderbook for ${level}:`, error));
+        .catch(error => console.error(`Error loading orderbook for ${currentLevel}:`, error));
 }
 
 function showGameOver() {
