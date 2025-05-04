@@ -1,4 +1,5 @@
 let timerInterval;
+let typewriterSound;
 let currentLevel = 1;
 let amountOfPosts = 10;
 let correctPosts = 0;
@@ -47,6 +48,18 @@ function acceptPost(postId) {
     const post = document.getElementById(postId);
 
     if (post) {
+        // Play the "Correct" sound effect
+        const correctSound = new Audio('assets/audio/Correct.mp3');
+        correctSound.volume = 1.0; 
+        correctSound.currentTime = 1.0;
+        correctSound.play().catch(error => console.error("Audio playback error:", error));
+
+        // Stop the sound after 1 second
+        setTimeout(() => {
+            correctSound.pause();
+            correctSound.currentTime = 1.0; // Reset the sound to the beginning
+        }, 1000); // Stop after 1 second
+
         // Remove buttons
         const buttons = post.querySelectorAll('button');
         buttons.forEach(button => button.remove());
@@ -75,6 +88,18 @@ function denyPost(postId) {
     const post = document.getElementById(postId);
 
     if (post) {
+        // Play the "Wrong" sound effect
+        const wrongSound = new Audio('assets/audio/Wrong.mp3');
+        wrongSound.volume = 1.0; 
+        wrongSound.currentTime = 4.0;
+        wrongSound.play().catch(error => console.error("Audio playback error:", error));
+
+        // Stop the sound after 1 second
+        setTimeout(() => {
+            wrongSound.pause();
+            wrongSound.currentTime = 4.0; // Reset the sound to the beginning
+        }, 1000); // Stop after 1 second
+
         post.style.height = '75px';
         post.offsetHeight;
         // Add a closing animation
@@ -229,6 +254,14 @@ function goToLoadingPage() {
     console.log("Go to Loading page...");
     const introScreen = document.getElementById('first-page-container');
     const gameContainer = document.querySelector('.game-container');
+
+    //stop the typewriter sound
+    if (typewriterSound) {
+        console.log("Stopping typewriter sound...");
+        typewriterSound.volume = 0.0; // Mute the sound
+        typewriterSound.pause();
+        typewriterSound.currentTime = 0; // Reset the sound to the beginning
+    }
 
     // Hide the introductory screen and show the game container
     introScreen.style.display = 'none';
@@ -485,7 +518,7 @@ function typeWriter(text, elementId, speed = 100, callback = null) {
     element.textContent = '';
 
     // Create or reset the typewriter sound
-    const typewriterSound = new Audio('assets/audio/typewriter-machine.mp3');
+    typewriterSound = new Audio('assets/audio/typewriter-machine.mp3');
     typewriterSound.volume = 1.0; // Set the volume to 100%
 
     const interval = setInterval(() => {
