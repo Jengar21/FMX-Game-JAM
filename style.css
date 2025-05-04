@@ -7,9 +7,9 @@ body {
 
 .game-container {
     background-image: url('assets/forest-quantized.png');
-    background-size:72%; /* Scale the image down to fit */
+    background-size:80%; /* Scale the image down to fit */
     background-position: 50% 50%;
-    transition: background-position 0.2s ease; /* Smooth transition for background movement */
+    transition: background-position 0.1s ease; /* Smooth transition for background movement */
 
   
     grid-template-areas:
