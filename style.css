@@ -9,7 +9,7 @@ body {
     background-image: url('assets/Room.png');
     image-rendering: pixelated; /* Turn off anti-aliasing for the background image */
     background-size: 30%; /* Scale the image down to fit */
-    background-position: 50% 50%;
+    background-position: 0px 20px;
     transition: background-position 0.1s ease; /* Smooth transition for background movement */
 
   
@@ -219,6 +219,7 @@ footer {
     height: 100%;
     width: 100px;;
     box-sizing: border-box;
+    padding-right: 4px;
 }
 
 

@@ -50,7 +50,7 @@ function acceptPost(postId) {
     if (post) {
         // Play the "Correct" sound effect
         const correctSound = new Audio('assets/audio/Correct.mp3');
-        correctSound.volume = 1.0; 
+        correctSound.volume = 1.0;
         correctSound.currentTime = 1.0;
         correctSound.play().catch(error => console.error("Audio playback error:", error));
 
@@ -90,7 +90,7 @@ function denyPost(postId) {
     if (post) {
         // Play the "Wrong" sound effect
         const wrongSound = new Audio('assets/audio/Wrong.mp3');
-        wrongSound.volume = 1.0; 
+        wrongSound.volume = 1.0;
         wrongSound.currentTime = 4.0;
         wrongSound.play().catch(error => console.error("Audio playback error:", error));
 
@@ -219,7 +219,20 @@ function bossTalkAnimation() {
     bossVoiceSound.volume = 1.0; // Set the volume to 100%
     bossVoiceSound.loop = true; // Enable looping for the sound
 
-    const text = "Great job! Let's move on to the next level.";
+    let text = "Great job! Let's move on to the next level.";
+    switch (incorrectPosts) {
+        case 0:
+            text = "Great job! Let's move on to the next task.";
+            break;
+        case 1:
+            text = "You better be careful. Our masters dont like underachievers.";
+            break;
+        case 2:
+            text = "If you keep performing like this, you won't last long.";
+            break;s
+        default:
+            text = "This is unacceptable.";
+    }
     let index = 0;
 
     // Clear any existing text
@@ -289,17 +302,22 @@ function showPerformanceScreen() {
     overlay.style.opacity = '1'; // Fade in
 
     // Start the typewriter effect with the level number
-    typeWriter(`${correctPosts / amountOfPosts}`, 'correct-answers-count', 100, () => {
+    typeWriter(`${correctPosts}`, 'correct-answers-count', 100, () => {
         console.log('Typing complete!');
     });
     setTimeout(() => {
-        typeWriter(`${timerInterval}`, 'time-needed', 100, () => {
+        typeWriter(`${incorrectPosts}`, 'incorrect-answers-count', 100, () => {
             console.log('Typing complete!');
         });
+        setTimeout(() => {
+            typeWriter(`${timerInterval}`, 'time-needed', 100, () => {
+                console.log('Typing complete!');
+            });
+        }, 1000);
     }, 1000);
 
     setTimeout(() => {
-        bossTalkAnimation();
+        bossTalkAnimation(incorrectPosts);
     }, 2000); // Wait for the fade-in animation to complete
 
 }
@@ -353,7 +371,7 @@ function loadLevel() {
             document.getElementById('orders-container').innerHTML = html;
         })
         .catch(error => console.error(`Error loading orderbook for level ${currentLevel}:`, error));
-    }
+}
 
 function startNewDay() {
     currentLevel++;
@@ -448,8 +466,8 @@ function addParallaxEffectToLeft() {
         const mouseX = event.clientX - rect.left; // Mouse X position relative to <left>
         const mouseY = event.clientY - rect.top;  // Mouse Y position relative to <left>
 
-        const percentX = (mouseX / rect.width) * 200; // Percentage across the width
-        const percentY = (mouseY / rect.height) * 200; // Percentage across the height
+        const percentX = (mouseX / rect.width) * 50; // Percentage across the width
+        const percentY = (mouseY / rect.height) * 800; // Percentage across the height
 
         // Adjust the background position based on mouse position
         gameContainer.style.backgroundPosition = `${50 + (percentX - 50) / 10}% ${50 + (percentY - 50) / 10}%`;
