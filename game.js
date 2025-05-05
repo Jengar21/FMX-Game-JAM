@@ -72,7 +72,7 @@ function acceptPost(postId) {
     if (post) {
         // Play the "Correct" sound effect
         const correctSound = new Audio('assets/audio/Correct.mp3');
-        correctSound.volume = 1.0;
+        correctSound.volume = 0.25;
         correctSound.currentTime = 1.0;
         correctSound.play().catch(error => console.error("Audio playback error:", error));
 
@@ -112,7 +112,7 @@ function denyPost(postId) {
     if (post) {
         // Play the "Wrong" sound effect
         const wrongSound = new Audio('assets/audio/Wrong.mp3');
-        wrongSound.volume = 1.0;
+        wrongSound.volume = 0.15;
         wrongSound.currentTime = 4.0;
         wrongSound.play().catch(error => console.error("Audio playback error:", error));
 
@@ -429,6 +429,9 @@ function loadLevel() {
 
     title = document.getElementById('title');
     title.innerHTML = `Level ${currentLevel}`;
+    // Play background music
+    playBackgroundMusic();
+    
     // Load the specified level's HTML into the feed container
     fetch(`levels/level${currentLevel}.html`)
         .then(response => response.text())
