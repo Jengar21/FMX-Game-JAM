@@ -8,14 +8,30 @@
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     
 </head>
-  <body>
+
     <div id="screen-overlay" style.visibility="hidden"
     onclick="hideOverlay()">
         <div class="transition-text" id="screen-overlay-text">
         </div>
     </div>
 
-    <div id="results-screen" style.visibility="hidden">
+   <body>
+      <!-- Help Sidebar -->
+      <div id="help-sidebar" class="help-sidebar" style="display: none;">
+        <h2>How to Play</h2>
+        <p>Welcome to the game! Here's how to play:</p>
+        <ul>
+          <li>Accept or deny posts based on the orders provided.</li>
+          <li>Use the "Accept" and "Deny" buttons to manage posts.</li>
+          <li>Complete orders to progress to the next level.</li>
+          <li>Keep an eye on the timer and finish before time runs out!</li>
+          <li>At the end of each level, review your performance.</li>
+        </ul>
+      </div>
+
+      <!-- Help Button -->
+      <button id="help-button" class="help-button" style="display: none;">Help</button>
+     <div id="results-screen" style.visibility="hidden">
         <h1 class="game-over-text">Performance Interview</h1>
         <p class="answers-performance">Correct Answers: <span id="correct-answers-count"></span></p>
         <p class="time-performace">Time: <span id="time-needed"></span></p>

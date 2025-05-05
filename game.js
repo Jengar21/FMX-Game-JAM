@@ -655,4 +655,16 @@ function pauseBackgroundMusic() {
     }
 }
 
+// Toggle Help Sidebar
+function toggleHelpSidebar() {
+    const helpSidebar = document.getElementById('help-sidebar');
+    const isHidden = helpSidebar.style.right === '-300px';
+
+    // Toggle the sidebar position
+    helpSidebar.style.right = isHidden ? '10px' : '-300px';
+}
+
+// Add event listener to the Help button
+document.getElementById('help-button').addEventListener('click', toggleHelpSidebar);
+
 showMenu();
