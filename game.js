@@ -52,10 +52,10 @@ function startGame() {
     playBackgroundMusic();
 
     // Apply the typewriter effect to the title
-    typeWriter("Welcome, To MySource Controll.", 'first-page-title', 120, () => {
+    typeWriter("Welcome, To MySource Control.", 'first-page-title', 120, () => {
         // After the title finishes, apply the typewriter effect to the text
         typeWriter(
-            "After the recent ellection you have been hired as a content manager. Follow the orders to keep people in check",
+            "After the recent election you have been hired as a content manager. Follow the orders to keep people in check",
             'first-page-text',
             80,
             () => {
