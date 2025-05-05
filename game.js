@@ -302,6 +302,7 @@ function goToLoadingPage() {
 
 function showLoadingScreen() {
     const overlay = document.getElementById('screen-overlay');
+    const button = document.getElementById('continue-button');
     overlay.style.visibility = 'visible';
     overlay.style.opacity = '1'; // Fade in
 
@@ -309,6 +310,12 @@ function showLoadingScreen() {
     typeWriter(`Loading Level ${currentLevel}...`, 'screen-overlay-text', 100, () => {
         console.log('Typing complete!');
     });
+
+    setTimeout(() => {
+        console.log("button vis...");
+        button.style.visibility = 'visible';
+        button.style.opacity = '1';
+    }, 2000);
 }
 
 function showPerformanceScreen() {
@@ -371,6 +378,9 @@ function hideOverlay() {
         const posts = feed.querySelectorAll('.post');
         amountOfPosts = posts.length;
         console.log(`Amount of posts: ${amountOfPosts}`);
+
+        const button = document.getElementById('continue-button');
+        button.style.opacity = '0';
 
     }, 2000); // Wait for the fade-out animation to complete
 }
