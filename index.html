@@ -1,12 +1,15 @@
 <!DOCTYPE html>
-<html lang="en"></html>
+<html lang="en">
+
+</html>
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Game</title>
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
-    
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Game</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+
 </head>
 
     <div id="screen-overlay" style.visibility="hidden" onclick="hideOverlay()">
@@ -15,79 +18,83 @@
         <button class="button" id="continue-button" style="opacity: 0;">Continue</button>
     </div>
 
-   <body>
-      <!-- Help Sidebar -->
-      <div id="help-sidebar" class="help-sidebar" style="display: none;">
-        <h2>How to Play</h2>
-        <p>Welcome to the game! Here's how to play:</p>
-        <ul>
-          <li>Accept or deny posts based on the orders provided.</li>
-          <li>Use the "Accept" and "Deny" buttons to manage posts.</li>
-          <li>Complete orders to progress to the next level.</li>
-          <li>Keep an eye on the timer and finish before time runs out!</li>
-          <li>At the end of each level, review your performance.</li>
-        </ul>
+<body>
+  <!-- Help Sidebar -->
+  <div id="help-sidebar" class="help-sidebar" style="display: none;">
+    <h2>How to Play</h2>
+    <p>Welcome to the game! Here's how to play:</p>
+    <ul>
+      <li>Accept or deny posts based on the orders provided.</li>
+      <br> 
+      <li>Use the "Accept" and "Deny" buttons to manage posts.</li>
+      <br> 
+      <li>Complete orders to progress to the next level.</li>
+      <br> 
+      <li>Keep an eye on the timer and finish before time runs out!</li>
+      <br> 
+      <li>At the end of each level, review your performance.</li>
+    </ul>
+  </div>
+
+  <!-- Help Button -->
+  <button id="help-button" class="help-button" style="display: none;">Help</button>
+
+  <div id="results-screen" style.visibility="hidden">
+    <h1 class="game-over-text">Performance Interview</h1>
+    <p class="answers-correct">Correct Answers: <span id="correct-answers-count"></span></p>
+    <p class="answers-incorrect">Incorrect Answers: <span id="incorrect-answers-count"></span></p>
+    <p class="time-performace">Time: <span id="time-needed"></span></p>
+    <div class="boss-talking">
+      <img class="boss-image" src="assets/boss_shut.png" alt="Boss Image">
+      <div class="boss-text transition-text" id="boss-overlay-text" style="font-size: 1rem;">
       </div>
-
-      <!-- Help Button -->
-      <button id="help-button" class="help-button" style="display: none;">Help</button>
-     <div id="results-screen" style.visibility="hidden">
-        <h1 class="game-over-text">Performance Interview</h1>
-        <p class="answers-correct">Correct Answers: <span id="correct-answers-count"></span></p>
-        <p class="answers-incorrect">Incorrect Answers: <span id="incorrect-answers-count"></span></p>
-        <p class="time-performace">Time: <span id="time-needed"></span></p>
-        <div class="boss-talking">
-            <img class="boss-image" src="assets/boss_shut.png" alt="Boss Image">
-            <div class="boss-text transition-text" id="boss-overlay-text" style="font-size: 1rem;">
-            </div>
-        </div>
-        <button class="continue-to-next-day-button button" onclick="startNewDay()">Next Day --></button>
     </div>
+    <button class="continue-to-next-day-button button" onclick="startNewDay()">Next Day --></button>
+  </div>
 
-    <!-- Game Over Screen -->
-    <div id="game-over-screen" style="display: none;">
-      <h1 class="game-over-text">Game Over</h1>
-      <button class="restart-button" onclick="restartGame()">Restart Game</button>
+  <!-- Game Over Screen -->
+  <div id="game-over-screen" style="display: none;">
+    <h1 class="game-over-text">Game Over</h1>
+    <button class="restart-button" onclick="restartGame()">Restart Game</button>
+  </div>
+
+  <div class="menu">
+    <div class="menu-header">
+      <button class="start Game" onclick="startGame()">Start Game</button>
     </div>
+  </div>
 
-    <div class="menu">
-        <div class="menu-header">
-            <button class="start Game" onclick="startGame()">Start Game</button>
-        </div>
-    </div>
+  <!-- Introductory Screen -->
+  <div id="first-page-container" class="first-page-container" style="display: none;" onclick="goToLoadingPage()">
+    <h1 class="first-page-title" id="first-page-title"></h1>
+    <p class="first-page-text" id="first-page-text"></p>
+    <button class="start-button" style="display: none;">Continue</button>
+  </div>
 
-    <!-- Introductory Screen -->
-    <div id="first-page-container" class="first-page-container" style="display: none;" onclick="goToLoadingPage()">
-      <h1 class="first-page-title" id="first-page-title"></h1>
-      <p class="first-page-text" id="first-page-text"></p>
-      <button class="start-button"  style="display: none;">Continue</button>
-    </div>
+  <div class="game-container">
+    <header id="header">
+      <!-- Header content -->
+      <div id="timer" class="timer">2:00</div>
+      <div id="title">Game Title</div>
+    </header>
 
-    <div class="game-container">
-        <header id="header">
-          <!-- Header content -->
-          <div id="timer" class="timer">2:00</div>
-          <div id="title">Game Title</div> 
-        </header>
-      
-        <left>
-          <!-- spacer -->
-        </left>
-      
-        <feed id="post-board-container">
-        </feed>
-      
-        <orders id="orders-container">
-        </orders>
-      
-        <footer>
-          <!-- Footer content -->
-        </footer>
-      </div>
-  </body>
+    <left>
+      <!-- spacer -->
+    </left>
+
+    <feed id="post-board-container">
+    </feed>
+
+    <orders id="orders-container">
+    </orders>
+
+    <footer>
+      <!-- Footer content -->
+    </footer>
+  </div>
 
   <!-- End Page -->
-   <div id="end-page-container" class="end-page-container" style="display: none;">
+  <div id="end-page-container" class="end-page-container" style="display: none;">
     <h1 class="end-page-title" id="end-page-title"></h1>
     <p class="end-page-text" id="end-page-text"></p>
     <button class="end-button" onclick="showPixartPage()" style="display: none;">End</button>
@@ -97,6 +104,8 @@
   <div id="pixart-page-container" class="pixart-page-container" style="display: none;">
     <img src="assets/pixart-world.png" alt="Pixart of the World" class="pixart-image">
   </div>
+</body>
 
-  <!-- Import game.js -->
+
+<!-- Import game.js -->
 <script src="game.js"></script>

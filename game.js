@@ -16,10 +16,16 @@ let musicLoopInterval;
 function showMenu() {
     const gameContainer = document.querySelector('.game-container');
     const menu = document.querySelector('.menu');
+    const helpSidebar = document.getElementById('help-sidebar');
+    const helpButton = document.getElementById('help-button');
 
     // Show the menu and hide the game container
     menu.style.display = 'block';
     gameContainer.style.display = 'none';
+
+    // Hide the help sidebar and button
+    helpSidebar.style.display = 'none';
+    helpButton.style.display = 'none';
 }
 
 function startGame() {
@@ -28,6 +34,8 @@ function startGame() {
     const titleElement = document.querySelector('.first-page-title');
     const textElement = document.querySelector('.first-page-text');
     const continueButton = document.querySelector('.start-button');
+    const helpSidebar = document.getElementById('help-sidebar'); 
+    const helpButton = document.getElementById('help-button'); 
 
     // Hide the menu and show the introductory screen
     menu.style.display = 'none';
@@ -35,6 +43,10 @@ function startGame() {
 
     // Hide the "Continue" button initially
     continueButton.style.display = 'none';
+
+    // Hide the help sidebar and button on the intro screen
+    helpSidebar.style.display = 'none';
+    helpButton.style.display = 'none';
 
     // Start the background music
     playBackgroundMusic();
@@ -388,6 +400,13 @@ function hideOverlay() {
 function loadLevel() {
     console.log(`Loading ${currentLevel}...`);
 
+    const helpSidebar = document.getElementById('help-sidebar');
+    const helpButton = document.getElementById('help-button');
+
+    // Show the help sidebar and button on level pages
+    helpSidebar.style.display = 'block';
+    helpButton.style.display = 'block';
+
     title = document.getElementById('title');
     title.innerHTML = `Level ${currentLevel}`;
     // Load the specified level's HTML into the feed container
@@ -486,6 +505,14 @@ function finishYourDay() {
 
 function showGameOver() {
     console.log("Game Over...");
+
+    const helpSidebar = document.getElementById('help-sidebar');
+    const helpButton = document.getElementById('help-button');
+
+    // Hide the help sidebar and button
+    helpSidebar.style.display = 'none';
+    helpButton.style.display = 'none';
+
     // Stop the background music
     stopBackgroundMusic();
 
@@ -634,10 +661,17 @@ function showEndPage() {
     const titleElement = document.getElementById('end-page-title');
     const textElement = document.getElementById('end-page-text');
     const continueButton = document.querySelector('.end-button');
+    const helpSidebar = document.getElementById('help-sidebar');
+    const helpButton = document.getElementById('help-button');
+
 
     // Hide the game container and show the end page
     gameContainer.style.display = 'none';
     endPageContainer.style.display = 'flex';
+
+    // Hide the help sidebar and button
+    helpSidebar.style.display = 'none';
+    helpButton.style.display = 'none';
 
     // Hide the "Continue" button initially
     continueButton.style.display = 'none';
@@ -719,16 +753,32 @@ function pauseBackgroundMusic() {
     }
 }
 
+// Set the initial state of the Help Sidebar
+function initializeHelpSidebar() {
+    const helpSidebar = document.getElementById('help-sidebar');
+    helpSidebar.style.right = '-400px'; // Ensure the sidebar starts off-screen
+}
+
 // Toggle Help Sidebar
 function toggleHelpSidebar() {
     const helpSidebar = document.getElementById('help-sidebar');
-    const isHidden = helpSidebar.style.right === '-300px';
+    const isHidden = helpSidebar.style.right === '-400px';
 
-    // Toggle the sidebar position
-    helpSidebar.style.right = isHidden ? '10px' : '-300px';
+    if (isHidden) {
+        // Slide in the sidebar
+        helpSidebar.style.right = '10px';
+    } else {
+        // Slide out the sidebar
+        helpSidebar.style.right = '-400px';
+    }
 }
 
 // Add event listener to the Help button
 document.getElementById('help-button').addEventListener('click', toggleHelpSidebar);
+
+// Ensure the Help Sidebar is initialized when the page loads
+window.onload = () => {
+    initializeHelpSidebar();
+};
 
 showMenu();
