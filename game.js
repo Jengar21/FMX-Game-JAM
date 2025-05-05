@@ -5,7 +5,7 @@ let typewriterInterval
 let bossTalkingInterval; // Global variable to store the interval
 let bossVoiceSound; // Global variable to store the boss voice sound
 
-let currentLevel = 1;
+let currentLevel = 0;
 let amountOfPosts = 10;
 let correctPosts = 0;
 let incorrectPosts = 0;
@@ -255,6 +255,10 @@ function bossTalkAnimation() {
     bossVoiceSound.volume = 0.6; // Set the volume to 100%
     bossVoiceSound.loop = true; // Enable looping for the sound
 
+    // Pause the background music
+    if (backgroundMusic && !backgroundMusic.paused) {
+        backgroundMusic.pause();
+
 
     let text = "Great job! Let's move on to the next level.";
     switch (incorrectPosts) {
@@ -296,6 +300,11 @@ function bossTalkAnimation() {
             // Stop the boss voice sound
             bossVoiceSound.pause();
             bossVoiceSound.currentTime = 0; // Reset the sound to the beginning
+
+            // Resume the background music
+            if (backgroundMusic && backgroundMusic.paused) {
+                backgroundMusic.play().catch(error => console.error("Audio playback error:", error));
+            }
         }
     }, 150); // Adjust the interval for the desired speed
 }
@@ -572,6 +581,9 @@ addParallaxEffectToLeft();
 function restartGame() {
     console.log("Restarting game...");
 
+    // Reset the current level to 1
+    currentLevel = 1;
+
     // Hide the Game Over screen
     const gameOverScreen = document.getElementById('game-over-screen');
     gameOverScreen.style.display = 'none';
@@ -643,6 +655,11 @@ function typeWriter(text, elementId, speed = 100, callback = null) {
     }
     typewriterSound.volume = 1.0; // Set the volume to 100%
 
+    // Pause the background music
+    if (backgroundMusic && !backgroundMusic.paused) {
+        backgroundMusic.pause();
+    }
+
     if (typewriterInterval) {
         clearInterval(typewriterInterval);
     }
@@ -661,6 +678,11 @@ function typeWriter(text, elementId, speed = 100, callback = null) {
             // Stop the typewriter sound
             typewriterSound.pause();
             typewriterSound.currentTime = 0; // Reset the sound to the beginning
+
+            // Resume the background music
+            if (backgroundMusic && backgroundMusic.paused) {
+                backgroundMusic.play().catch(error => console.error("Audio playback error:", error));
+            }
 
             if (callback) callback(); // Call the callback function if provided
         }
