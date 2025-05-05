@@ -164,6 +164,10 @@ footer {
     background-color: #f9f9f9;
 }
 
+feed > .post-board {
+    min-height: 460.8px;
+}
+
   /* The rest of your existing CSS for .myspace-header, .post, etc. remains the same */
 .myspace-header {
     font-family: 'Press Start 2P', cursive, sans-serif;
@@ -531,4 +535,28 @@ footer {
 
 .help-button:hover {
     background-color: #555;
+}
+
+.finish-day-button.glow-effect {
+    animation: orange-glow 1.5s infinite alternate;
+    box-shadow: 0 0 20px orange, 0 0 40px orange, 0 0 60px orange;
+    border-color: orange;
+}
+
+@keyframes orange-glow {
+    from {
+        box-shadow: 0 0 10px orange, 0 0 20px orange, 0 0 30px orange;
+    }
+    to {
+        box-shadow: 0 0 40px orange, 0 0 60px orange, 0 0 80px orange;
+    }
+}
+
+@keyframes yellow-glow {
+    from {
+        box-shadow: 0 0 10px yellow, 0 0 20px yellow, 0 0 30px yellow;
+    }
+    to {
+        box-shadow: 0 0 20px yellow, 0 0 40px yellow, 0 0 60px yellow;
+    }
 }

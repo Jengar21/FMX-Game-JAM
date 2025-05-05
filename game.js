@@ -151,16 +151,17 @@ function updateOrder(postId, field) {
 
         if (field === 'accept-posts' && acceptPosts.includes(postId)) {
             correctPosts++;
+            incorrectPosts--;
             // Remove the postId from accept-posts
             const updatedAcceptPosts = acceptPosts.filter(id => id !== postId);
             order.setAttribute('accept-posts', updatedAcceptPosts.join(' '));
         } else if (field === 'deny-posts' && denyPosts.includes(postId)) {
             correctPosts++;
+            incorrectPosts--;
             // Remove the postId from deny-posts
             const updatedDenyPosts = denyPosts.filter(id => id !== postId);
             order.setAttribute('deny-posts', updatedDenyPosts.join(' '));
         } else {
-            incorrectPosts++;
         }
 
         // If the order has no more IDs in both fields, highlight and remove it
@@ -171,6 +172,9 @@ function updateOrder(postId, field) {
             highlightAndRemoveOrder(order);
         }
     });
+
+    console.log(`Correct posts: ${correctPosts}`);
+    console.log(`Incorrect posts: ${incorrectPosts}`);
 }
 
 function highlightAndRemoveOrder(order) {
@@ -181,6 +185,12 @@ function highlightAndRemoveOrder(order) {
     // Remove the order after a short delay
     setTimeout(() => {
         order.remove();
+
+        const allOrdersCompleted = document.querySelectorAll('#orders-container .post').length === 0;
+        if (allOrdersCompleted) {
+            const finishButton = document.querySelector('.finish-day-button');
+            finishButton.classList.add('glow-effect'); // Add the glow effect class
+        }
     }, 1000);
 }
 
@@ -400,11 +410,11 @@ function hideOverlay() {
         const posts = feed.querySelectorAll('.post');
         amountOfPosts = posts.length;
         console.log(`Amount of posts: ${amountOfPosts}`);
-
+        incorrectPosts = amountOfPosts;
         const button = document.getElementById('continue-button');
         button.style.opacity = '0';
 
-    }, 2000); // Wait for the fade-out animation to complete
+    }, 1000); // Wait for the fade-out animation to complete
 }
 
 function loadLevel() {
@@ -440,6 +450,8 @@ function loadLevel() {
 
 function startNewDay() {
     currentLevel++;
+    // Reset variables for the new day
+    correctPosts = 0;
     console.log(`Starting a new day ${currentLevel}...`);
     //update background image depending on level
     switch (currentLevel) {
