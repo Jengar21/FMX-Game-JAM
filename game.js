@@ -492,7 +492,7 @@ function startNewDay() {
 function finishYourDay() {
     console.log(`Finishing your day ${currentLevel}...`);
 
-    if (currentLevel === 5) {
+    if (currentLevel === 4) {
         // Show the Game Over screen if it's the end of Level 3
         showEndPage();
         return; // Stop further execution
@@ -580,10 +580,11 @@ function addParallaxEffectToLeft() {
 addParallaxEffectToLeft();
 
 function restartGame() {
+    location.reload();
     console.log("Restarting game...");
 
-    // Reset the current level to 1
-    currentLevel = 1;
+    /* Reset the current level to 0
+    currentLevel = 0;
 
     // Hide the Game Over screen
     const gameOverScreen = document.getElementById('game-over-screen');
@@ -601,7 +602,7 @@ function restartGame() {
     document.getElementById('post-board-container').innerHTML = '';
     document.getElementById('orders-container').innerHTML = '';
 
-    console.log("Returned to the Start Game page.");
+    console.log("Returned to the Start Game page.");*/
 }
 
 function startCountdown(durationInSeconds) {
