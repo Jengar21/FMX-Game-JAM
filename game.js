@@ -661,6 +661,9 @@ function typeWriter(text, elementId, speed = 100, callback = null) {
         backgroundMusic.pause();
     }
 
+    typewriterSound.pause();
+    typewriterSound.currentTime = 3.0;
+
     if (typewriterInterval) {
         clearInterval(typewriterInterval);
     }
@@ -670,15 +673,21 @@ function typeWriter(text, elementId, speed = 100, callback = null) {
             element.textContent += text[index];
             index++;
 
-            // Play the typewriter sound starting at 3 seconds
-            typewriterSound.currentTime = 3.0; // Start at 3 seconds
-            typewriterSound.play().catch(error => console.error("Audio playback error:", error));
+            // Play the typewriter sound only if it's not already playing
+            if (typewriterSound.paused || typewriterSound.ended) {
+                typewriterSound.currentTime = 3.0; // Start from the beginning
+                typewriterSound.play().catch(error => {
+                    if (error.name !== 'AbortError') {
+                        console.error("Audio playback error:", error);
+                    }
+                });
+            }
         } else {
             clearInterval(typewriterInterval); // Stop the typing effect when done
 
             // Stop the typewriter sound
             typewriterSound.pause();
-            typewriterSound.currentTime = 0; // Reset the sound to the beginning
+            typewriterSound.currentTime = 3.0; // Reset the sound to the beginning
 
             // Resume the background music
             if (backgroundMusic && backgroundMusic.paused) {
