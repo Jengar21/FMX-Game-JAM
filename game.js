@@ -4,6 +4,8 @@ let currentLevel = 1;
 let amountOfPosts = 10;
 let correctPosts = 0;
 let incorrectPosts = 0;
+let backgroundMusic;
+let musicLoopInterval;
 
 
 function showMenu() {
@@ -28,6 +30,9 @@ function startGame() {
 
     // Hide the "Continue" button initially
     continueButton.style.display = 'none';
+
+    // Start the background music
+    playBackgroundMusic();
 
     // Apply the typewriter effect to the title
     typeWriter("Welcome, Media Controller.", 'first-page-title', 120, () => {
@@ -423,6 +428,9 @@ function finishYourDay() {
 
 function showGameOver() {
     console.log("Game Over...");
+    // Stop the background music
+    stopBackgroundMusic();
+
     // Hide the game container and menu
     document.querySelector('.game-container').style.display = 'none';
     document.querySelector('.menu').style.display = 'none';
@@ -595,6 +603,56 @@ function showPixartPage() {
 
     // Add a click event listener to the pixart page to transition to the game over page
     pixartPageContainer.addEventListener('click', showGameOver);
+}
+
+function playBackgroundMusic() {
+    if (!backgroundMusic) {
+        backgroundMusic = new Audio('assets/audio/background.mp3'); 
+        backgroundMusic.volume = 0.1;
+        backgroundMusic.playbackRate = 0.85; 
+    }
+
+    // Set the starting point of the music
+    backgroundMusic.currentTime = 80; // 1 minute and 20 seconds (80 seconds)
+
+    // Play the music
+    backgroundMusic.play().catch(error => console.error("Audio playback error:", error));
+
+    // Clear any existing interval to avoid multiple loops
+    if (musicLoopInterval) {
+        clearInterval(musicLoopInterval);
+    }
+
+    // Set an interval to loop the desired segment
+    musicLoopInterval = setInterval(() => {
+        if (backgroundMusic.currentTime >= 92) { 
+            backgroundMusic.currentTime = 80; 
+            backgroundMusic.play().catch(error => console.error("Audio playback error:", error));
+        }
+    }, 100); // Check every 100ms
+}
+
+function stopBackgroundMusic() {
+    if (backgroundMusic) {
+        backgroundMusic.pause();
+        backgroundMusic.currentTime = 80;
+    }
+
+    // Clear the loop interval
+    if (musicLoopInterval) {
+        clearInterval(musicLoopInterval);
+    }
+}
+
+function pauseBackgroundMusic() {
+    if (backgroundMusic) {
+        backgroundMusic.pause();
+    }
+
+    // Clear the loop interval
+    if (musicLoopInterval) {
+        clearInterval(musicLoopInterval);
+    }
 }
 
 showMenu();
