@@ -5,7 +5,7 @@ let typewriterInterval
 let bossTalkingInterval; // Global variable to store the interval
 let bossVoiceSound; // Global variable to store the boss voice sound
 
-let currentLevel = 1;
+let currentLevel = 0;
 let amountOfPosts = 10;
 let correctPosts = 0;
 let incorrectPosts = 0;
@@ -549,6 +549,9 @@ addParallaxEffectToLeft();
 
 function restartGame() {
     console.log("Restarting game...");
+
+    // Reset the current level to 1
+    currentLevel = 1;
 
     // Hide the Game Over screen
     const gameOverScreen = document.getElementById('game-over-screen');
