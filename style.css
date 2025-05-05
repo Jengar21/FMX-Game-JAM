@@ -62,7 +62,7 @@ footer {
     background-size: cover;
     background-position: center;
     image-rendering: pixelated; /* Turn off anti-aliasing for the background image */
-    background-position-x: -150px;
+    background-position-x: -20px;
 }
 
 .menu {
@@ -170,7 +170,7 @@ footer {
 }
 
 feed > .post-board {
-    min-height: 460.8px;
+    min-height: 454.8px;
 }
 
   /* The rest of your existing CSS for .myspace-header, .post, etc. remains the same */
