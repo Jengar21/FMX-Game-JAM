@@ -1,5 +1,10 @@
+// Global variables
 let timerInterval;
 let typewriterSound;
+let typewriterInterval
+let bossTalkingInterval; // Global variable to store the interval
+let bossVoiceSound; // Global variable to store the boss voice sound
+
 let currentLevel = 1;
 let amountOfPosts = 10;
 let correctPosts = 0;
@@ -55,7 +60,7 @@ function acceptPost(postId) {
     if (post) {
         // Play the "Correct" sound effect
         const correctSound = new Audio('assets/audio/Correct.mp3');
-        correctSound.volume = 1.0; 
+        correctSound.volume = 1.0;
         correctSound.currentTime = 1.0;
         correctSound.play().catch(error => console.error("Audio playback error:", error));
 
@@ -95,7 +100,7 @@ function denyPost(postId) {
     if (post) {
         // Play the "Wrong" sound effect
         const wrongSound = new Audio('assets/audio/Wrong.mp3');
-        wrongSound.volume = 1.0; 
+        wrongSound.volume = 1.0;
         wrongSound.currentTime = 4.0;
         wrongSound.play().catch(error => console.error("Audio playback error:", error));
 
@@ -220,11 +225,29 @@ function addButtonsToPosts() {
 function bossTalkAnimation() {
     const bossImage = document.querySelector('.boss-image');
     const bossTextElement = document.getElementById('boss-overlay-text');
-    const bossVoiceSound = new Audio('assets/audio/boss-voice.mp3');
+
+    // Create or reset the boss voice sound
+    if (!bossVoiceSound) {
+        bossVoiceSound = new Audio('assets/audio/boss-voice.mp3');
+    }
     bossVoiceSound.volume = 1.0; // Set the volume to 100%
     bossVoiceSound.loop = true; // Enable looping for the sound
 
-    const text = "Great job! Let's move on to the next level.";
+
+    let text = "Great job! Let's move on to the next level.";
+    switch (incorrectPosts) {
+        case 0:
+            text = "Great job! Let's move on to the next task.";
+            break;
+        case 1:
+            text = "You better be careful. Our masters dont like underachievers.";
+            break;
+        case 2:
+            text = "If you keep performing like this, you won't last long.";
+            break; s
+        default:
+            text = "This is unacceptable.";
+    }
     let index = 0;
 
     // Clear any existing text
@@ -235,7 +258,7 @@ function bossTalkAnimation() {
     bossVoiceSound.play().catch(error => console.error("Audio playback error:", error));
 
     // Start the animation
-    const bossTalkingInterval = setInterval(() => {
+    bossTalkingInterval = setInterval(() => {
         if (index < text.length) {
             // Switch the boss image to simulate talking
             bossImage.src = bossImage.src.includes('boss_shut.png') ? 'assets/boss_open.png' : 'assets/boss_shut.png';
@@ -294,17 +317,22 @@ function showPerformanceScreen() {
     overlay.style.opacity = '1'; // Fade in
 
     // Start the typewriter effect with the level number
-    typeWriter(`${correctPosts / amountOfPosts}`, 'correct-answers-count', 100, () => {
+    typeWriter(`${correctPosts}`, 'correct-answers-count', 100, () => {
         console.log('Typing complete!');
     });
     setTimeout(() => {
-        typeWriter(`${timerInterval}`, 'time-needed', 100, () => {
+        typeWriter(`${incorrectPosts}`, 'incorrect-answers-count', 100, () => {
             console.log('Typing complete!');
         });
+        setTimeout(() => {
+            typeWriter(`${timerInterval}`, 'time-needed', 100, () => {
+                console.log('Typing complete!');
+            });
+        }, 1000);
     }, 1000);
 
     setTimeout(() => {
-        bossTalkAnimation();
+        bossTalkAnimation(incorrectPosts);
     }, 2000); // Wait for the fade-in animation to complete
 
 }
@@ -316,6 +344,17 @@ function hideOverlay() {
 
     const timerElement = document.getElementById('timer');
     timerElement.textContent = "2:00";
+
+    // Stop the typewriter sound
+    if (typewriterSound) {
+        typewriterSound.pause();
+        typewriterSound.currentTime = 0; // Reset the sound to the beginning
+    }
+
+    // Clear the typewriter interval
+    if (typewriterInterval) {
+        clearInterval(typewriterInterval);
+    }
 
     // Clear the existing timer
     if (timerInterval) {
@@ -358,7 +397,7 @@ function loadLevel() {
             document.getElementById('orders-container').innerHTML = html;
         })
         .catch(error => console.error(`Error loading orderbook for level ${currentLevel}:`, error));
-    }
+}
 
 function startNewDay() {
     currentLevel++;
@@ -377,6 +416,15 @@ function startNewDay() {
         case 4:
             document.querySelector('.game-container').style.backgroundImage = "url('assets/room4.png')";
             break;
+    }
+
+    // Stop boss talking if it's still running
+    if (bossTalkingInterval) {
+        clearInterval(bossTalkingInterval);
+    }
+    if (bossVoiceSound) {
+        bossVoiceSound.pause();
+        bossVoiceSound.currentTime = 0; // Reset the sound to the beginning
     }
     //hide performance screen with delay
     showLoadingScreen(currentLevel);
@@ -456,8 +504,8 @@ function addParallaxEffectToLeft() {
         const mouseX = event.clientX - rect.left; // Mouse X position relative to <left>
         const mouseY = event.clientY - rect.top;  // Mouse Y position relative to <left>
 
-        const percentX = (mouseX / rect.width) * 200; // Percentage across the width
-        const percentY = (mouseY / rect.height) * 200; // Percentage across the height
+        const percentX = (mouseX / rect.width) * 50; // Percentage across the width
+        const percentY = (mouseY / rect.height) * 800; // Percentage across the height
 
         // Adjust the background position based on mouse position
         gameContainer.style.backgroundPosition = `${50 + (percentX - 50) / 10}% ${50 + (percentY - 50) / 10}%`;
@@ -541,10 +589,16 @@ function typeWriter(text, elementId, speed = 100, callback = null) {
     element.textContent = '';
 
     // Create or reset the typewriter sound
-    typewriterSound = new Audio('assets/audio/typewriter-machine.mp3');
+    if (!typewriterSound) {
+        typewriterSound = new Audio('assets/audio/typewriter-machine.mp3');
+    }
     typewriterSound.volume = 1.0; // Set the volume to 100%
 
-    const interval = setInterval(() => {
+    if (typewriterInterval) {
+        clearInterval(typewriterInterval);
+    }
+
+    typewriterInterval = setInterval(() => {
         if (index < text.length) {
             element.textContent += text[index];
             index++;
@@ -553,7 +607,7 @@ function typeWriter(text, elementId, speed = 100, callback = null) {
             typewriterSound.currentTime = 3.0; // Start at 3 seconds
             typewriterSound.play().catch(error => console.error("Audio playback error:", error));
         } else {
-            clearInterval(interval); // Stop the typing effect when done
+            clearInterval(typewriterInterval); // Stop the typing effect when done
 
             // Stop the typewriter sound
             typewriterSound.pause();
@@ -607,9 +661,9 @@ function showPixartPage() {
 
 function playBackgroundMusic() {
     if (!backgroundMusic) {
-        backgroundMusic = new Audio('assets/audio/background.mp3'); 
+        backgroundMusic = new Audio('assets/audio/background.mp3');
         backgroundMusic.volume = 0.1;
-        backgroundMusic.playbackRate = 0.85; 
+        backgroundMusic.playbackRate = 0.85;
     }
 
     // Set the starting point of the music
@@ -625,8 +679,8 @@ function playBackgroundMusic() {
 
     // Set an interval to loop the desired segment
     musicLoopInterval = setInterval(() => {
-        if (backgroundMusic.currentTime >= 92) { 
-            backgroundMusic.currentTime = 80; 
+        if (backgroundMusic.currentTime >= 92) {
+            backgroundMusic.currentTime = 80;
             backgroundMusic.play().catch(error => console.error("Audio playback error:", error));
         }
     }, 100); // Check every 100ms
