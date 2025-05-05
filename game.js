@@ -1,5 +1,10 @@
+// Global variables
 let timerInterval;
 let typewriterSound;
+let typewriterInterval
+let bossTalkingInterval; // Global variable to store the interval
+let bossVoiceSound; // Global variable to store the boss voice sound
+
 let currentLevel = 1;
 let amountOfPosts = 10;
 let correctPosts = 0;
@@ -220,9 +225,14 @@ function addButtonsToPosts() {
 function bossTalkAnimation() {
     const bossImage = document.querySelector('.boss-image');
     const bossTextElement = document.getElementById('boss-overlay-text');
-    const bossVoiceSound = new Audio('assets/audio/boss-voice.mp3');
+
+    // Create or reset the boss voice sound
+    if (!bossVoiceSound) {
+        bossVoiceSound = new Audio('assets/audio/boss-voice.mp3');
+    }
     bossVoiceSound.volume = 1.0; // Set the volume to 100%
     bossVoiceSound.loop = true; // Enable looping for the sound
+
 
     let text = "Great job! Let's move on to the next level.";
     switch (incorrectPosts) {
@@ -234,7 +244,7 @@ function bossTalkAnimation() {
             break;
         case 2:
             text = "If you keep performing like this, you won't last long.";
-            break;s
+            break; s
         default:
             text = "This is unacceptable.";
     }
@@ -248,7 +258,7 @@ function bossTalkAnimation() {
     bossVoiceSound.play().catch(error => console.error("Audio playback error:", error));
 
     // Start the animation
-    const bossTalkingInterval = setInterval(() => {
+    bossTalkingInterval = setInterval(() => {
         if (index < text.length) {
             // Switch the boss image to simulate talking
             bossImage.src = bossImage.src.includes('boss_shut.png') ? 'assets/boss_open.png' : 'assets/boss_shut.png';
@@ -335,6 +345,17 @@ function hideOverlay() {
     const timerElement = document.getElementById('timer');
     timerElement.textContent = "2:00";
 
+    // Stop the typewriter sound
+    if (typewriterSound) {
+        typewriterSound.pause();
+        typewriterSound.currentTime = 0; // Reset the sound to the beginning
+    }
+
+    // Clear the typewriter interval
+    if (typewriterInterval) {
+        clearInterval(typewriterInterval);
+    }
+
     // Clear the existing timer
     if (timerInterval) {
         clearInterval(timerInterval);
@@ -395,6 +416,15 @@ function startNewDay() {
         case 4:
             document.querySelector('.game-container').style.backgroundImage = "url('assets/room4.png')";
             break;
+    }
+
+    // Stop boss talking if it's still running
+    if (bossTalkingInterval) {
+        clearInterval(bossTalkingInterval);
+    }
+    if (bossVoiceSound) {
+        bossVoiceSound.pause();
+        bossVoiceSound.currentTime = 0; // Reset the sound to the beginning
     }
     //hide performance screen with delay
     showLoadingScreen(currentLevel);
@@ -559,10 +589,16 @@ function typeWriter(text, elementId, speed = 100, callback = null) {
     element.textContent = '';
 
     // Create or reset the typewriter sound
-    typewriterSound = new Audio('assets/audio/typewriter-machine.mp3');
+    if (!typewriterSound) {
+        typewriterSound = new Audio('assets/audio/typewriter-machine.mp3');
+    }
     typewriterSound.volume = 1.0; // Set the volume to 100%
 
-    const interval = setInterval(() => {
+    if (typewriterInterval) {
+        clearInterval(typewriterInterval);
+    }
+
+    typewriterInterval = setInterval(() => {
         if (index < text.length) {
             element.textContent += text[index];
             index++;
@@ -571,7 +607,7 @@ function typeWriter(text, elementId, speed = 100, callback = null) {
             typewriterSound.currentTime = 3.0; // Start at 3 seconds
             typewriterSound.play().catch(error => console.error("Audio playback error:", error));
         } else {
-            clearInterval(interval); // Stop the typing effect when done
+            clearInterval(typewriterInterval); // Stop the typing effect when done
 
             // Stop the typewriter sound
             typewriterSound.pause();
@@ -625,9 +661,9 @@ function showPixartPage() {
 
 function playBackgroundMusic() {
     if (!backgroundMusic) {
-        backgroundMusic = new Audio('assets/audio/background.mp3'); 
+        backgroundMusic = new Audio('assets/audio/background.mp3');
         backgroundMusic.volume = 0.1;
-        backgroundMusic.playbackRate = 0.85; 
+        backgroundMusic.playbackRate = 0.85;
     }
 
     // Set the starting point of the music
@@ -643,8 +679,8 @@ function playBackgroundMusic() {
 
     // Set an interval to loop the desired segment
     musicLoopInterval = setInterval(() => {
-        if (backgroundMusic.currentTime >= 92) { 
-            backgroundMusic.currentTime = 80; 
+        if (backgroundMusic.currentTime >= 92) {
+            backgroundMusic.currentTime = 80;
             backgroundMusic.play().catch(error => console.error("Audio playback error:", error));
         }
     }, 100); // Check every 100ms
