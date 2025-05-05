@@ -12,13 +12,14 @@
 
 </head>
 
-    <div id="screen-overlay" style.visibility="hidden" onclick="hideOverlay()">
-        <div class="transition-text" id="screen-overlay-text">
-        </div>
-        <button class="button" id="continue-button" style="opacity: 0;">Continue</button>
-    </div>
-
 <body>
+
+  <div id="screen-overlay" style.visibility="hidden" onclick="hideOverlay()">
+    <div class="transition-text" id="screen-overlay-text">
+    </div>
+    <button class="button" id="continue-button" style="opacity: 0;">Continue</button>
+</div>
+
   <!-- Help Sidebar -->
   <div id="help-sidebar" class="help-sidebar" style="display: none;">
     <h2>How to Play</h2>
@@ -43,7 +44,7 @@
     <h1 class="game-over-text">Performance Interview</h1>
     <p class="answers-correct">Correct Answers: <span id="correct-answers-count"></span></p>
     <p class="answers-incorrect">Incorrect Answers: <span id="incorrect-answers-count"></span></p>
-    <p class="time-performace">Time: <span id="time-needed"></span></p>
+    <p class="time-performace" style.visibility="hidden">Time: <span id="time-needed"></span></p>
     <div class="boss-talking">
       <img class="boss-image" src="assets/boss_shut.png" alt="Boss Image">
       <div class="boss-text transition-text" id="boss-overlay-text" style="font-size: 1rem;">
