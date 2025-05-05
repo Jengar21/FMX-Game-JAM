@@ -9,7 +9,6 @@ body {
     background-image: url('assets/Room.png');
     image-rendering: pixelated; /* Turn off anti-aliasing for the background image */
     background-size: 30%; /* Scale the image down to fit */
-    background-position: 50% 50%;
     transition: background-position 0.1s ease; /* Smooth transition for background movement */
 
   
@@ -63,7 +62,7 @@ footer {
     background-size: cover;
     background-position: center;
     image-rendering: pixelated; /* Turn off anti-aliasing for the background image */
-    background-position-x: -30px;
+    background-position-x: -150px;
 }
 
 .menu {
@@ -344,7 +343,7 @@ feed > .post-board {
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    z-index: 1000; /* Ensure it appears on top of other elements */
+    z-index: 10000; /* Ensure it appears on top of other elements */
 }
 
 .game-over-text {
@@ -481,9 +480,10 @@ feed > .post-board {
 }
 
 .pixart-image {
-    max-width: 80%;
+    width: 87%;
     height: auto;
     margin-bottom: 20px;
+    image-rendering: pixelated;
 }
 
 .pixart-button {

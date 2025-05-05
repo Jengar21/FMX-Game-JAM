@@ -577,7 +577,7 @@ function addParallaxEffectToLeft() {
 }
 
 // Call the function to enable the parallax effect
-addParallaxEffectToLeft();
+//addParallaxEffectToLeft();
 
 function restartGame() {
     location.reload();
