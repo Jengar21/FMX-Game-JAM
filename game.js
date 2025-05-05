@@ -52,10 +52,10 @@ function startGame() {
     playBackgroundMusic();
 
     // Apply the typewriter effect to the title
-    typeWriter("Welcome, Media Controller.", 'first-page-title', 120, () => {
+    typeWriter("Welcome, To MySource Controll.", 'first-page-title', 120, () => {
         // After the title finishes, apply the typewriter effect to the text
         typeWriter(
-            "Step into the control room. The world's media flows through your hands. Your decisions will shape perception, a profound responsibility.",
+            "After the recent ellection you have been hired as a content manager. Follow the orders to keep people in check",
             'first-page-text',
             80,
             () => {
@@ -725,7 +725,7 @@ function showEndPage() {
     typeWriter("Your Job is Done.", 'end-page-title', 120, () => {
         // After the title finishes, apply the typewriter effect to the text
         typeWriter(
-            "Here is all the damage you made to the world. The media you controlled shaped perceptions, influenced decisions, and left a lasting impact.",
+            "You have successfully followed the orders. The people are isolating, neighbors aren't talking, and all resistance has been silenced.",
             'end-page-text',
             80,
             () => {
