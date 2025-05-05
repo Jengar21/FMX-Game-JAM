@@ -230,7 +230,7 @@ function bossTalkAnimation() {
     if (!bossVoiceSound) {
         bossVoiceSound = new Audio('assets/audio/boss-voice.mp3');
     }
-    bossVoiceSound.volume = 1.0; // Set the volume to 100%
+    bossVoiceSound.volume = 0.6; // Set the volume to 100%
     bossVoiceSound.loop = true; // Enable looping for the sound
 
 
