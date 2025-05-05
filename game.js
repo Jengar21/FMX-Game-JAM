@@ -245,6 +245,10 @@ function bossTalkAnimation() {
     bossVoiceSound.volume = 0.6; // Set the volume to 100%
     bossVoiceSound.loop = true; // Enable looping for the sound
 
+    // Pause the background music
+    if (backgroundMusic && !backgroundMusic.paused) {
+        backgroundMusic.pause();
+
 
     let text = "Great job! Let's move on to the next level.";
     switch (incorrectPosts) {
@@ -286,6 +290,11 @@ function bossTalkAnimation() {
             // Stop the boss voice sound
             bossVoiceSound.pause();
             bossVoiceSound.currentTime = 0; // Reset the sound to the beginning
+
+            // Resume the background music
+            if (backgroundMusic && backgroundMusic.paused) {
+                backgroundMusic.play().catch(error => console.error("Audio playback error:", error));
+            }
         }
     }, 150); // Adjust the interval for the desired speed
 }
@@ -634,6 +643,11 @@ function typeWriter(text, elementId, speed = 100, callback = null) {
     }
     typewriterSound.volume = 1.0; // Set the volume to 100%
 
+    // Pause the background music
+    if (backgroundMusic && !backgroundMusic.paused) {
+        backgroundMusic.pause();
+    }
+
     if (typewriterInterval) {
         clearInterval(typewriterInterval);
     }
@@ -652,6 +666,11 @@ function typeWriter(text, elementId, speed = 100, callback = null) {
             // Stop the typewriter sound
             typewriterSound.pause();
             typewriterSound.currentTime = 0; // Reset the sound to the beginning
+
+            // Resume the background music
+            if (backgroundMusic && backgroundMusic.paused) {
+                backgroundMusic.play().catch(error => console.error("Audio playback error:", error));
+            }
 
             if (callback) callback(); // Call the callback function if provided
         }
