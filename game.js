@@ -297,6 +297,7 @@ function bossTalkAnimation() {
             }
         }
     }, 150); // Adjust the interval for the desired speed
+    }
 }
 
 function goToLoadingPage() {
